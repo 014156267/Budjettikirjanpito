@@ -11,7 +11,7 @@ Ohjelmassa olisi rajapintoina (tämä vielä tosin auki, onko implements vai interf
 
 **Käyttäjän toiminnot:** 
 
-	*Tulojen ja menojen syöttäminen
-	-Rahatilanteen seuraaminen
-	*Maksu- ja säästösuunnitelman seuraaminen
+*Tulojen ja menojen syöttäminen
+-Rahatilanteen seuraaminen
+*Maksu- ja säästösuunnitelman seuraaminen
 	
