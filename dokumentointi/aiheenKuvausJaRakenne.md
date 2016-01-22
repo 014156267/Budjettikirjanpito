@@ -1,4 +1,4 @@
-###Aiheen kuvas ja rakenne
+###Aiheen kuvaus ja rakenne
 
 
 **Aihe:** Budjettikirjanpito
