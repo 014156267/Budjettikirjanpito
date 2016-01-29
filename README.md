@@ -5,6 +5,7 @@ Budjettikirjanpito on niin yrityksille, perheille kuin yksittäisille henkilöille
 
 ##### Dokumentaatio
 
-[Aiheen kuvaus](dokumentaatio/aiheenKuvausJaRakenne.md)
-[Tuntikirjanpito](dokumentaatio/Tuntikirjanpito.md)
+[Aiheen kuvaus](dokumentointi/aiheenKuvausJaRakenne.md)
+
+[Tuntikirjanpito](dokumentointi/Tuntikirjanpito.md)
 
