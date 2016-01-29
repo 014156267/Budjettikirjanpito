@@ -16,4 +16,4 @@ Ohjelmassa olisi rajapintoina (tämä vielä tosin auki, onko implements vai interf
 * Maksu- ja säästösuunnitelman seuraaminen
 
 
-![Luokkakaavio](dokumentaatio/Luokkakaavio.png)
+![Luokkakaavio](Luokkakaavio.png)
