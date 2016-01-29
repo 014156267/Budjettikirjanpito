@@ -4,6 +4,7 @@ package budjettikirjanpito.logiikka.kayttajat;
 import budjettikirjanpito.logiikka.rahaliikenne.Ostos;
 import budjettikirjanpito.logiikka.rahaliikenne.Saasto;
 import budjettikirjanpito.logiikka.rahaliikenne.Tapahtuma;
+import budjettikirjanpito.logiikka.rahaliikenne.Tulo;
 import budjettikirjanpito.logiikka.rahaliikenne.Velka;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -11,31 +12,48 @@ import java.util.Scanner;
 
 public abstract class Kayttaja {
   
-    public ArrayList<Velka> velat;
+    
+    
     public ArrayList<Tapahtuma> tapahtumat;
     public ArrayList<Saasto> saastot;
-    public ArrayList<Ostos> menot;
+    public ArrayList<Ostos> ostokset;
+    public ArrayList<Tulo> tulot;
+    public ArrayList<Velka> velat;
     public Scanner lukija;
 
     public Kayttaja() {
         this.lukija = new Scanner(System.in);
         velat = new ArrayList<>();
-        tapahtumat = new ArrayList<>();
+        
     }
     
     public void lisaaTapahtuma() {
-        
+        System.out.println("Valitse tapahtuma: ");
+        System.out.println("1. Kertaostos");
+        System.out.println("2. Tulo");
+        System.out.println("3. Velka");
+        System.out.println("4. Säästö");
+        int luku = Integer.parseInt(lukija.nextLine());
+        if (luku == 1) {
+            
+        }
+    }
+    
+    public void lisaaKertaostos() {
+        System.out.println("");
+    }
+    
+    public void lisaaTulo() {
         System.out.println("Maksaja: ");
         String maksaja = lukija.nextLine();
         System.out.println("Tulon suuruus: ");
         double maara = lukija.nextDouble();
         System.out.println("Selitys: ");
         String selitys = lukija.nextLine();
-        Tapahtuma tulo = new Tapahtuma(maksaja, maara, selitys);
+        Tulo tulo = new Tulo(maksaja, maara, selitys);
         tulot.add(tulo);
+        tapahtumat.add(tulo);
     }
-    
-    
     
     public void lisaaVelka() {
         System.out.println("Velan suuruus: ");
@@ -44,10 +62,15 @@ public abstract class Kayttaja {
         double korko = lukija.nextDouble();
         System.out.println("Lyhennysaika (kuukausina): ");
         int kk = lukija.nextInt();
-        Velka velka = new Velka(maara, kk, korko);
+        Velka velka = new Velka(maara, "", kk, korko);
         velka.setAihe();
         velka.setSelitys();
         velat.add(velka);
+        tapahtumat.add(velka);
+    }
+    
+    public void lisaaSaasto() {
+        
     }
     
   
