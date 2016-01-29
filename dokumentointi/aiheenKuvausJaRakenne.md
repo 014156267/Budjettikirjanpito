@@ -7,11 +7,13 @@ Toteutetaan ohjelma, jonne on mahdollista asettaa käyttäjän palkka, syöttää meno
 
 Ohjelmassa olisi rajapintoina (tämä vielä tosin auki, onko implements vai interface) käyttäjä sekä menot, ehkä tulotkin. Käyttäjän toteuttaisi henkilö, perhe tai yritys, ja menoja voisi olla ruoka-ostos, huvitus, lainat (joka voisi olla myös interface). Mitään käyriä en ainakaan lähtökohtaisesti ajatellut tehdä, mutta säästöjen ja lainojen suhteen olisi hyvä saada koodattua jokin laskuri, joka kertoisi, milloin säästetylle matkalle pääsee lähtemään tai milloin autolaina on maksettu kokonaan.
 
-**Käyttäjät:** Yksityishenkilö, perhe tai organisaatio
+**Käyttäjät:** Yksityishenkilö, perhe tai yritys
 
 **Käyttäjän toiminnot:** 
 
 * Tulojen ja menojen syöttäminen
 * Rahatilanteen seuraaminen
 * Maksu- ja säästösuunnitelman seuraaminen
-	
+
+
+![Luokkakaavio](dokumentaatio/Luokkakaavio.png)
