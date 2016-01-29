@@ -18,7 +18,7 @@ public class Velka extends Tapahtuma{
         this.aihe = "Ei vielä aihetta.";
         lukija = new Scanner(System.in);
     }
-
+    
     public double getMaara() {
         return maara;
     }

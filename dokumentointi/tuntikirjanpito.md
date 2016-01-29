@@ -9,3 +9,9 @@
 * Pe 22.1. klo 11-12:30
   - Markdowntreeni‰, kuvauksen kirjoittamista sek‰ tuntikirjanpitoa
 
+**Viikko 2**
+
+* Ke 27.1. klo 14-16
+  - Luokkien luontia ja m‰‰rittely‰ 
+* Pe 29.1. klo 11-23
+  - Luokkien ja niiden toiminnallisuuden luontia, luokkakaavio, testej‰, pit-raportti ja kaikkea muuta, mit‰ ohjeessa pyydettiin.

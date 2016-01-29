@@ -18,7 +18,7 @@ public class Henkilo extends Kayttaja {
     @Override
     public String toString() {
         String tulostettava = "";
-        tulostettava += etunimi + " " + sukunimi + " ";
+        tulostettava += etunimi + " " + sukunimi;
         return tulostettava;
 
     }

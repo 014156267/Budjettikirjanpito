@@ -20,7 +20,7 @@ public class Tapahtuma {
     }
     
     public String toString() {
-        return "\n Määrä: " + maara + "\n Selitys: " + selitys;
+        return "Määrä: " + maara + "\nSelitys: " + selitys;
     }
     
 }

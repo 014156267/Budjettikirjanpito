@@ -12,6 +12,9 @@ public class Perhe extends Kayttaja{
         henkilot = new ArrayList<>();
     }
     
+    public void lisaaHenkilo(Henkilo henkilo) {
+        henkilot.add(henkilo);
+    }
     
     
     
@@ -19,7 +22,7 @@ public class Perhe extends Kayttaja{
     public String toString() {
        String tulostettava = "";
         for (Henkilo h : henkilot) {
-            tulostettava += h.toString();
+            tulostettava += h.toString() + "\n";
         }
        return tulostettava;
     }

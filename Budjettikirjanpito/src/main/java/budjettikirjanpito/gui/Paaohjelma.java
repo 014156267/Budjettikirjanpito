@@ -5,6 +5,8 @@
  */
 package budjettikirjanpito.gui;
 
+import budjettikirjanpito.logiikka.rahaliikenne.Tapahtuma;
+
 /**
  *
  * @author Timo
@@ -15,7 +17,7 @@ public class Paaohjelma {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
     }
     
 }
