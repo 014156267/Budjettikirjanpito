@@ -15,5 +15,3 @@ Ohjelmassa on Pääohjelma, Kayttaja ja Tapahtuma. Käyttäjän aliluokat Henkilo, Pe
 * Rahatilanteen seuraaminen
 * Maksu- ja säästösuunnitelman seuraaminen
 
-
-![Luokkakaavio](Luokkakaavio.png)
