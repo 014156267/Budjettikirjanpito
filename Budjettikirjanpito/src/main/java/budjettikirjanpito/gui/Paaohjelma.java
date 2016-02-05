@@ -5,19 +5,19 @@
  */
 package budjettikirjanpito.gui;
 
+import budjettikirjanpito.logiikka.kayttajat.Kayttaja;
 import budjettikirjanpito.logiikka.rahaliikenne.Tapahtuma;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 
-/**
- *
- * @author Timo
- */
 public class Paaohjelma {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
+    public static Kayttoliittyma kayttoliittyma;
+    
+    public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {
+        kayttoliittyma = new Kayttoliittyma();
+        kayttoliittyma.kaynnista();  
     }
     
 }

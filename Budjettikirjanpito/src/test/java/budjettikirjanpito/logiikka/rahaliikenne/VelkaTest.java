@@ -18,7 +18,10 @@ import static org.junit.Assert.*;
  */
 public class VelkaTest {
     
+    Velka velka;
+    
     public VelkaTest() {
+        
     }
     
     @BeforeClass
@@ -31,15 +34,28 @@ public class VelkaTest {
     
     @Before
     public void setUp() {
+        
     }
     
     @After
     public void tearDown() {
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    @Test
+    public void paljonkoVelkaaJaljellaKkPaastaToimii() {
+        velka = new Velka(480.00, "Puhelin", 24, 2.0);
+        assertEquals(160.00,velka.paljonkoVelkaaJaljellaXKkPaasta(16), 0.009);
+        assertEquals(240.00,velka.paljonkoVelkaaJaljellaXKkPaasta(12), 0.009);
+        assertEquals(0,velka.paljonkoVelkaaJaljellaXKkPaasta(130), 0.009);
+        assertEquals(0,velka.paljonkoVelkaaJaljellaXKkPaasta(24), 0.009);
+        assertEquals(20.00,velka.paljonkoVelkaaJaljellaXKkPaasta(23), 0.009);
+    }
+    
+//    @Test
+//    public void velanKorkoYhteensaToimii() {
+//        Velka velka2 = new Velka(480.00, "Puhelin", 24, 2.0);
+//        assertEquals(14.40, velka2.velanKorkoYhteensa(), 0.009);
+//        
+//    }
+    
 }

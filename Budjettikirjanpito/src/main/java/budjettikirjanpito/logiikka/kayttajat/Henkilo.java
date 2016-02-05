@@ -1,4 +1,4 @@
-package budjettikirjanpito.logiikka.kayttajat;
+ package budjettikirjanpito.logiikka.kayttajat;
 
 import budjettikirjanpito.logiikka.rahaliikenne.Tapahtuma;
 import budjettikirjanpito.logiikka.rahaliikenne.Velka;
