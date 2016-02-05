@@ -18,7 +18,7 @@
 
 **Viikko 3**
 
-* To 27.1. klo 14-16
+* To 4.2. klo 14-16
   - Suunnittelua 
-* Pe 29.1. klo 10-24
+* Pe 5.2. klo 10-24
   - Tekstikäyttöliittymän toteutusta, ser-tiedostoon tallennuksen mahdollistus, testejä ja toiminnallisuutta.
