@@ -1,7 +1,9 @@
 package budjettikirjanpito.logiikka.rahaliikenne;
 
 import java.io.Serializable;
-
+/**
+ * Tapahtuma toimii yliluokkana Ostokselle, Saastolle, Tulolle ja Velalle. Tapahtumalla on määrä ja selitys.
+ */
 public class Tapahtuma implements Serializable{
 
     public double maara;

@@ -75,20 +75,54 @@ public class KayttajaTest {
         saastot.add(henkilo.tapahtumat.get(3));
         assertEquals(saastot, henkilo.getSaastot());
     }
-
+    
+    @Test
     public void getTulotPelaa() {
         ArrayList<Tapahtuma> tulot = new ArrayList();
         tulot.add(henkilo.tapahtumat.get(4));
         tulot.add(henkilo.tapahtumat.get(5));
         assertEquals(tulot, henkilo.getTulot());
     }
-
+    
+    @Test
     public void getOstotPelaa() {
         ArrayList<Tapahtuma> ostot = new ArrayList();
-        ostot.add(henkilo.tapahtumat.get(4));
-        ostot.add(henkilo.tapahtumat.get(5));
+        ostot.add(henkilo.tapahtumat.get(2));
         assertEquals(ostot, henkilo.getOstokset());
 
+    }
+    
+    @Test
+    public void getKuukaudenTulotYhteensaPelaa() {
+        Tulo tulo = new Tulo("Mummu", 56.23, "kauppareissu");
+        henkilo.tapahtumat.add(tulo);
+        assertEquals(6058.23, henkilo.getKuukaudenTulotYhteensa(), 0.009);
+        Tulo tulo2 = new Tulo("Mummu", 50.40, "kauppareissu taas");
+        henkilo.tapahtumat.add(tulo2);
+        assertEquals(6108.63, henkilo.getKuukaudenTulotYhteensa(), 0.009);
+    }
+    
+    @Test
+    public void getKuukaudenMenotYhteensaPelaa() {
+        Velka velka = new Velka(100, "kauppareissu", 10, 10);
+        henkilo.tapahtumat.add(velka);
+        assertEquals(204.166666 + 26.666666 + 3000 + 10.833333, henkilo.getKuukaudenMenotYhteensa(), 0.009);
+        Ostos ostos = new Ostos(60, "laukku");
+        henkilo.tapahtumat.add(ostos);
+        assertEquals(60 + 204.166666 + 26.666666 + 3000 + 10.833333, henkilo.getKuukaudenMenotYhteensa(), 0.009);
+    }
+    
+    @Test
+    public void rahatilanneToimii() {
+        Tulo tulo = new Tulo("Mummu", 56.23, "kauppareissu");
+        henkilo.tapahtumat.add(tulo);
+        Tulo tulo2 = new Tulo("Mummu", 50.40, "kauppareissu taas");
+        henkilo.tapahtumat.add(tulo2);
+        Velka velka = new Velka(100, "kauppareissu", 10, 10);
+        henkilo.tapahtumat.add(velka);
+        Ostos ostos = new Ostos(60, "laukku");
+        henkilo.tapahtumat.add(ostos);
+        assertEquals(6108.63 - (60 + 204.166666 + 26.666666 + 3000 + 10.8333333), henkilo.getRahatilanne(), 0.009);
     }
     
     

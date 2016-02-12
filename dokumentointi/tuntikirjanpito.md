@@ -22,3 +22,13 @@
   - Suunnittelua 
 * Pe 5.2. klo 10-24
   - Tekstikäyttöliittymän toteutusta, ser-tiedostoon tallennuksen mahdollistus, testejä ja toiminnallisuutta.
+
+**Viikko 4**
+
+* Ke 10.2. klo 14-17
+  - Pajassa kysymässä neuvoja
+  - Käyttäjäluokan pustaus tulostusmetodeista, käyttöliittymän siistimistä.
+* To 11.2. klo 14-16
+  - Käyttöliittymän siistimistä
+* Pe 5.2. klo 17-24
+  - Testien tekoa, käyttöliittymää, checkstylen kanssa tappelemista huonolla menestyksellä, pitin ja tuntikirjanpidon päivitys.

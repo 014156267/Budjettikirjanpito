@@ -4,6 +4,12 @@ import budjettikirjanpito.logiikka.rahaliikenne.Tapahtuma;
 import budjettikirjanpito.logiikka.rahaliikenne.Velka;
 import java.util.ArrayList;
 
+ /**
+ * Perheellä on Kayttajalta peritty salasana ja tapahtumalista, ja perheeseen
+ * kuuluu joukko Henkilo-luokan oliota. Lisäksi getterit, joista saa perheen
+ * tulot, velat ja ostot.
+ */
+
 public class Perhe extends Kayttaja {
 
     private ArrayList<Henkilo> henkilot;
@@ -12,7 +18,9 @@ public class Perhe extends Kayttaja {
         super();
         henkilot = new ArrayList<>();
     }
-
+    
+    
+    
     public void lisaaHenkilo(Henkilo henkilo) {
         henkilot.add(henkilo);
     }

@@ -3,6 +3,11 @@
 import budjettikirjanpito.logiikka.rahaliikenne.Tapahtuma;
 import budjettikirjanpito.logiikka.rahaliikenne.Velka;
 
+ /**
+ * Henkilolla on Kayttaja-luokalta perittyjen salasanan ja tapahtumalistan
+ * lisäksi etu- ja sukunimi.
+ */
+ 
 public class Henkilo extends Kayttaja {
 
     private String etunimi;
