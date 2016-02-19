@@ -1,7 +1,6 @@
 package budjettikirjanpito.logiikka.kayttajat;
 
 import budjettikirjanpito.logiikka.rahaliikenne.Tapahtuma;
-import budjettikirjanpito.logiikka.rahaliikenne.Velka;
 import java.util.ArrayList;
 
  /**
@@ -19,13 +18,11 @@ public class Perhe extends Kayttaja {
         henkilot = new ArrayList<>();
     }
     
-    
-    
-    public void lisaaHenkilo(Henkilo henkilo) {
+    public final void lisaaHenkilo(final Henkilo henkilo) {
         henkilot.add(henkilo);
     }
 
-    public double getHenkiloidenVelatYhteensa() {
+    public final double getHenkiloidenVelatYhteensa() {
         double summa = 0;
         for (Henkilo h : henkilot) {
             for (Tapahtuma v : h.getVelat()) {
@@ -35,7 +32,7 @@ public class Perhe extends Kayttaja {
         return summa;
     }
     
-    public double getHenkiloidenTulotYhteensa() {
+    public final double getHenkiloidenTulotYhteensa() {
         double summa = 0;
         for (Henkilo h : henkilot) {
             for (Tapahtuma v : h.getTulot()) {
@@ -45,7 +42,7 @@ public class Perhe extends Kayttaja {
         return summa;
     }
     
-    public double getHenkiloidenOstotYhteensa() {
+    public final double getHenkiloidenOstotYhteensa() {
         double summa = 0;
         for (Henkilo h : henkilot) {
             for (Tapahtuma v : h.getOstokset()) {
@@ -55,15 +52,12 @@ public class Perhe extends Kayttaja {
         return summa;
     }
 
-    
-
     @Override
-    public String toString() {
+    public final String toString() {
         String tulostettava = "Perhe: \n";
         for (Henkilo h : henkilot) {
             tulostettava += "\n" + h.toString();
         }
         return tulostettava;
     }
-
 }

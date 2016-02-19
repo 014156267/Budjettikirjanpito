@@ -4,7 +4,7 @@ import java.io.Serializable;
 /**
  * Tapahtuma toimii yliluokkana Ostokselle, Saastolle, Tulolle ja Velalle. Tapahtumalla on määrä ja selitys.
  */
-public class Tapahtuma implements Serializable{
+public class Tapahtuma implements Serializable {
 
     public double maara;
     public String selitys;
@@ -14,23 +14,24 @@ public class Tapahtuma implements Serializable{
         this.selitys = selitys;
     }
 
-    public double getMaara() {
+    public final double getMaara() {
         return maara;
     }
 
-    public void setMaara(double maara) {
+    public final void setMaara(double maara) {
         this.maara = maara;
     }
 
-    public String getSelitys() {
+    public final String getSelitys() {
         return selitys;
     }
 
-    public void setSelitys(String selitys) {
+    public final void setSelitys(String selitys) {
         this.selitys = selitys;
     }
 
-    public String toString() {
+    @Override
+    public final String toString() {
         return "Määrä: " + maara + "\nSelitys: " + selitys;
     }
 

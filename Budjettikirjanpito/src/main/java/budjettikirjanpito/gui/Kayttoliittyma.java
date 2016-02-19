@@ -16,17 +16,23 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Käyttöliittymässä on lista käyttäjiä, joita ohjelman käyttäjä voi luoda.
+ * Current on tällä hetkellä kirjautuneena oleva käyttäjä. Lisäksi
+ * käyttöliittymä hoitaa desimaalilukujen muotoilun ja tietokannan (juuressa
+ * sijaitseva kayttajat.ser) päivittämisen.
+ */
 public class Kayttoliittyma {
 
-    public ArrayList<Kayttaja> kayttajat;
-    public Kayttaja current;
+    private ArrayList<Kayttaja> kayttajat;
+    private Kayttaja current;
     public Scanner lukija;
-    public String tiedostonNimi;
+    private String tiedostonNimi;
+    private static final DecimalFormat muotoilu = new DecimalFormat("###.##");
 
     public Kayttoliittyma() {
         kayttajat = new ArrayList<>();
@@ -35,7 +41,19 @@ public class Kayttoliittyma {
         tiedostonNimi = "";
     }
 
-    public void kaynnista() throws IOException, FileNotFoundException, ClassNotFoundException {
+    /**
+     * kaynnista() on metodi, joka suorittaa tekstikäyttöliittymän. Aluksi
+     * metodi lataa tietokannasta sinne aiemmilla käyttökerroilla talletetut
+     * tiedot käyttäjät-listaan. Tämän jälkeen metodi tarjoaa ohjelman
+     * käyttäjälle mahdollisuuden luoda uuden tunnuksen tai kirjautua sisään ja
+     * sitten syöttää tuloja ja menoja ja seurata niitä. Lopuksi metodi
+     * tallentaa muutokset tietokantaan käyttäjän valitessa niin.
+     *
+     * @throws java.io.FileNotFoundException
+     * @throws java.lang.ClassNotFoundException
+     */
+    public final void kaynnista() throws IOException,
+            FileNotFoundException, ClassNotFoundException {
         tietojenLataus();
         System.out.println("Tervetuloa!");
         while (true) {
@@ -43,7 +61,6 @@ public class Kayttoliittyma {
             if (current == null) {
                 System.out.println("Lisää käyttäjä syöttämällä 1");
                 System.out.println("Kirjaudu sisään syöttämällä 2");
-                System.out.println("Poista käyttäjä syöttämällä 3");
                 System.out.println("Lopeta syöttämällä x");
                 String syote = lukija.nextLine();
                 if (syote.equals("x")) {
@@ -52,47 +69,50 @@ public class Kayttoliittyma {
                     uudenKayttajanLisays();
                 } else if (syote.equals("2")) {
                     sisaanKirjautuminen();
-                } else if (syote.equals("3")) {
-                    poistaKayttaja();
+                } else {
+                    System.out.println("Anna kunnon syöte.");
                 }
             } else {
-                System.out.println("Lisää käyttäjä syöttämällä 1");
-                System.out.println("Poista käyttäjä syöttämällä 2");
-                System.out.println("Lisää tapahtuma syöttämällä 3");
-                System.out.println("Poista tapahtuma syöttämällä 4");
-                System.out.println("Tulostus syöttämällä 5");
-                System.out.println("Kirjaudu ulos syöttämällä 6");
+
+                System.out.println("Lisää tapahtuma syöttämällä 1");
+                System.out.println("Poista tapahtuma syöttämällä 2");
+                System.out.println("Tietoja tapahtumista syöttämällä 3");
+                System.out.println("Kirjaudu ulos syöttämällä 4");
+                System.out.println("Poista käyttäjä syöttämällä 5");
                 System.out.println("Lopeta syöttämällä x");
                 String syote = lukija.nextLine();
                 if (syote.equals("x")) {
+                    tietojenTallennusEhdolla();
                     break;
                 } else if (syote.equals("1")) {
-                    uudenKayttajanLisays();
-                } else if (syote.equals("2")) {
-                    poistaKayttaja();
-                } else if (syote.equals("3")) {
                     lisaaTapahtuma();
-                } else if (syote.equals("4")) {
+                } else if (syote.equals("2")) {
                     poistaTapahtuma();
-                } else if (syote.equals("5")) {
-                    System.out.println(current.toString());
-                } else if (syote.equals("6")) {
+                } else if (syote.equals("3")) {
+                    tapahtumaToiminnot();
+                } else if (syote.equals("4")) {
                     current = null;
+                    tietojenTallennusEhdolla();
+                } else if (syote.equals("5")) {
+                    poistaKayttaja();
                 } else {
                     System.out.println("Syötä kelvollinen syöte.");
                 }
             }
         }
-        tietojenTallennus();
     }
 
-    public void sisaanKirjautuminen() {
+    /**
+     * Metodi mahdollistaa Ohjelman käyttäjän sisäänkirjautumisen.
+     */
+    public final void sisaanKirjautuminen() {
         System.out.println("Syötä salasanasi: ");
         String salasana = lukija.nextLine();
         for (Kayttaja k : kayttajat) {
             if (k.salasana.equals(salasana)) {
                 current = k;
                 System.out.println("Tervetuloa " + k.toString());
+                break;
             }
         }
         if (current == null) {
@@ -100,7 +120,16 @@ public class Kayttoliittyma {
         }
     }
 
-    public void tietojenLataus() throws FileNotFoundException, IOException, ClassNotFoundException {
+    /**
+     * Metodi suorittuu kaynnista-metodin toimesta ja lataa tietokannan sisällön
+     * kayttajat-listaan.
+     *
+     * @throws java.io.FileNotFoundException
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
+    public final void tietojenLataus() throws FileNotFoundException,
+            IOException, ClassNotFoundException {
         if (new File("kayttajat.ser").exists()) {
             FileInputStream fis = new FileInputStream("kayttajat.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -110,17 +139,19 @@ public class Kayttoliittyma {
         }
     }
 
-    public void tietojenTallennus() throws FileNotFoundException, IOException {
+    /**
+     * Metodi tallentaa kayttajat-listan kayttajat.ser-tiedostoon. Metodi
+     * suoritetaan, mikäli ohjelman käyttäjä haluaa niin.
+     *
+     * @throws java.io.FileNotFoundException
+     */
+    public final void tietojenTallennusEhdolla() throws IOException {
         System.out.println("Tallenetaanko muutokset? (k/e)");
         while (true) {
             String vastaus = lukija.nextLine();
             if (vastaus.equals("k")) {
                 System.out.println("Tallennetaan...");
-                FileOutputStream fos = new FileOutputStream("kayttajat.ser");
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                oos.writeObject(kayttajat);
-                oos.close();
-                fos.close();
+                tietojenTallennus();
                 System.out.println("Tallennettu.");
                 break;
             } else if (vastaus.equals("e")) {
@@ -131,54 +162,26 @@ public class Kayttoliittyma {
         }
     }
 
-    public void poistaOstos() {
-        int i = 1;
-        for (Tapahtuma ostos : current.getOstokset()) {
-            System.out.print(i + ". " + ostos);
-            i++;
-        }
-        System.out.println("Syötä ostoksen järjestysnumero: ");
-        while (true) {
-            int syote = Integer.parseInt(lukija.nextLine());
-            if (syote > 0 && syote < current.getOstokset().size() + 1) {
-                current.tapahtumat.remove(current.getOstokset().get(i - 1));
-                System.out.println("Ostos poistettu.");
-                break;
-            } else {
-                System.out.println("Anna kunnon syöte!");
-            }
-        }
+    /**
+     * Metodi tallentaa kayttajat-listan kayttajat.ser-tiedostoon.
+     *
+     * @throws java.io.FileNotFoundException
+     */
+    public final void tietojenTallennus() throws IOException {
+        FileOutputStream fos = new FileOutputStream("kayttajat.ser");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(kayttajat);
+        oos.close();
+        fos.close();
     }
 
-    public void poistaTulo() {
-        int i = 1;
-        for (Tapahtuma tulo : current.getTulot()) {
-            System.out.print(i + ". " + tulo);
-            i++;
-        }
-        System.out.println("Syötä tulon järjestysnumero: ");
-        while (true) {
-            int syote = Integer.parseInt(lukija.nextLine());
-            if (syote > 0 && syote < current.getTulot().size() + 1) {
-                current.tapahtumat.remove(current.getTulot().get(i - 1));
-                System.out.println("Tulo poistettu.");
-                break;
-            } else {
-                System.out.println("Anna kunnon syöte!");
-            }
-        }
-    }
-
-    public void lisaaOstos() {
-        System.out.println("Ostoksen suuruus: ");
-        double maara = lukija.nextDouble();
-        System.out.println("Selitys: ");
-        String selitys = lukija.nextLine();
-        Ostos ostos = new Ostos(maara, selitys);
-        current.tapahtumat.add(ostos);
-    }
-
-    public void lisaaTapahtuma() {
+    /**
+     * Metodi kysyy, minkälaisen tapahtuman ohjelman käyttäjä haluaa lisätä ja
+     * kutsuu kyseisen tapahtumatyypin lisäysmetodia. Esim. jos ohjelman
+     * käyttäjä syöttää 1 eli haluaa lisätä uuden kertaostoksen, kutsuu tämä
+     * metodi syötteen perusteella metodia lisaaOstos().
+     */
+    public final void lisaaTapahtuma() {
         System.out.println("Valitse tapahtuma: ");
         System.out.println("1. Kertaostos");
         System.out.println("2. Tulo");
@@ -198,13 +201,19 @@ public class Kayttoliittyma {
         }
     }
 
-    public void poistaTapahtuma() {
+    /**
+     * Metodi kysyy, minkälaisen tapahtuman ohjelman käyttäjä haluaa poistaa ja
+     * kutsuu kyseisen tapahtumatyypin poistometodia. Esim. jos ohjelman
+     * käyttäjä syöttää 1 eli haluaa poistaa uuden kertaostoksen, kutsuu tämä
+     * metodi syötteen perusteella metodia poistaOstos().
+     */
+    public final void poistaTapahtuma() {
         System.out.println("Valitse tapahtuma: ");
         System.out.println("1. Kertaostos");
         System.out.println("2. Tulo");
         System.out.println("3. Velka");
         System.out.println("4. Säästö");
-        int luku = Integer.parseInt(lukija.nextLine());
+        int luku = kysyKokonaisluku(1, 4);
         if (luku == 1) {
             poistaOstos();
         } else if (luku == 2) {
@@ -213,48 +222,87 @@ public class Kayttoliittyma {
             poistaVelka();
         } else if (luku == 4) {
             poistaSaasto();
-        } else {
-            System.out.println("Anna kelvollinen syöte.");
         }
     }
 
-    public void lisaaTulo() {
+    /**
+     * Metodi kysyy syötettävän ostoksen tiedot ja lisää ostoksen currentin
+     * ostoksiin.
+     */
+    public final void lisaaOstos() {
+        System.out.println("Ostoksen suuruus: ");
+        double maara = kysyLuku(0, 999999999);
+        System.out.println("Selitys: ");
+        String selitys = lukija.nextLine();
+        Ostos ostos = new Ostos(maara, selitys);
+        current.tapahtumat.add(ostos);
+    }
+
+    /**
+     * Metodi poistaa ohjelman käyttäjän valitseman ostoksen currentin
+     * tapahtumista.
+     */
+    public final void poistaOstos() {
+        int i = 1;
+        for (Tapahtuma ostos : current.getOstokset()) {
+            System.out.print(i + ". " + ostos);
+            i++;
+        }
+        System.out.println("Syötä ostoksen järjestysnumero: ");
+        int syote = kysyKokonaisluku(1, current.getOstokset().size() + 1);
+        current.tapahtumat.remove(current.getOstokset().get(syote - 1));
+        System.out.println("Ostos poistettu.");
+    }
+
+    /**
+     * Metodi kysyy lisättävän tulon tiedot, luo tietojen perusteella Tulo-olion
+     * ja lisää sen currentin tapahtumiin.
+     */
+    public final void lisaaTulo() {
         System.out.println("Maksaja: ");
         String maksaja = lukija.nextLine();
         System.out.println("Tulon suuruus: ");
-        double maara = lukija.nextDouble();
+        double maara = kysyLuku(0, 999999999);
         System.out.println("Selitys: ");
         String selitys = lukija.nextLine();
         Tulo tulo = new Tulo(maksaja, maara, selitys);
         current.tapahtumat.add(tulo);
     }
 
-    public void poistaVelka() {
+    /**
+     * Metodi poistaa ohjelman käyttäjän valitseman tulon currentin
+     * tapahtumista.
+     */
+    public void poistaTulo() {
         int i = 1;
-        for (Tapahtuma velka : current.getVelat()) {
-            System.out.print(i + ". " + velka);
+        for (Tapahtuma tulo : current.getTulot()) {
+            System.out.print(i + ". " + tulo);
             i++;
         }
-        System.out.println("Syötä velan järjestysnumero: ");
-        while (true) {
-            int syote = Integer.parseInt(lukija.nextLine());
-            if (syote > 0 && syote < current.getVelat().size() + 1) {
-                current.tapahtumat.remove(current.getVelat().get(i - 1));
-                System.out.println("Velka poistettu.");
-                break;
-            } else {
-                System.out.println("Anna kunnon syöte!");
-            }
-        }
+        System.out.println("Syötä tulon järjestysnumero: ");
+        int syote = kysyKokonaisluku(1, current.getTulot().size() + 1);
+        current.tapahtumat.remove(current.getTulot().get(syote - 1));
+        System.out.println("Tulo poistettu.");
     }
 
-    public void lisaaVelka() {
+    /**
+     * Metodi kysyy lisättävän velan tiedot, luo tietojen perusteella
+     * Velka-olion ja lisää sen currentin tapahtumiin.
+     */
+    public final void lisaaVelka() {
         System.out.println("Velan suuruus: ");
-        double maara = lukija.nextDouble();
+        double maara = kysyLuku(0, 999999999);
         System.out.println("Vuosikorko (prosentteina): ");
-        double korko = lukija.nextDouble();
+        double korko = kysyLuku(0, 999999999);
         System.out.println("Lyhennysaika (kuukausina): ");
-        int kk = lukija.nextInt();
+        int kk = 0;
+        while (true) {
+            kk = kysyKokonaisluku(0, 999999999);
+            if (kk > 0) {
+                break;
+            }
+            System.out.println("Syötä positiivinen kokonaisluku.");
+        }
         Velka velka = new Velka(maara, "", kk, korko);
         System.out.println("Velan aihe: ");
         String aihe = lukija.nextLine();
@@ -265,42 +313,44 @@ public class Kayttoliittyma {
         current.tapahtumat.add(velka);
     }
 
-    public void poistaSaasto() {
+    /**
+     * Metodi poistaa ohjelman käyttäjän valitseman velan currentin
+     * tapahtumista.
+     */
+    public final void poistaVelka() {
         int i = 1;
-        for (Tapahtuma saasto : current.getSaastot()) {
-            System.out.print(i + ". " + saasto);
+        for (Tapahtuma velka : current.getVelat()) {
+            System.out.print(i + ". " + velka);
             i++;
         }
-        System.out.println("Syötä säästön järjestysnumero: ");
-        while (true) {
-            int syote = Integer.parseInt(lukija.nextLine());
-            if (syote > 0 && syote < current.getSaastot().size() + 1) {
-                current.tapahtumat.remove(current.getSaastot().get(i - 1));
-                System.out.println("Säästö poistettu.");
-                break;
-            } else {
-                System.out.println("Anna kunnon syöte!");
-            }
-        }
+        System.out.println("Syötä velan järjestysnumero: ");
+        int syote = kysyKokonaisluku(1, current.getVelat().size() + 1);
+        current.tapahtumat.remove(current.getVelat().get(syote - 1));
+        System.out.println("Velka poistettu.");
     }
 
-    public void lisaaSaasto() {
+    /**
+     * Metodi kysyy lisättävän säästön tiedot, luo tietojen perusteella
+     * Saasto-olion ja lisää sen currentin tapahtumiin.
+     */
+    public final void lisaaSaasto() {
         System.out.println("Säästön suuruus: ");
-        double maara = lukija.nextDouble();
+        double maara = kysyLuku(0, 999999999);
         System.out.println("Säästön selitys: ");
         String selitys = lukija.nextLine();
         Saasto saasto = new Saasto(maara, selitys);
-        System.out.println("Haluatko määritellä kuukausisumman (syötä 1) vai säästämisjakson pituuden (syötä 2)?");
+        System.out.println("Haluatko määritellä kuukausisumman (syötä 1) vai"
+                + " säästämisjakson pituuden (syötä 2)?");
         String syote = lukija.nextLine();
         while (true) {
             if (syote.equals("1")) {
                 System.out.println("Syötä kuukaudessa maksettava määrä: ");
-                double summa = lukija.nextDouble();
+                double summa = kysyLuku(0, 999999999);
                 saasto.setKuukausiSumma(summa);
                 break;
             } else if (syote.equals("2")) {
                 System.out.println("Syötä kuukausien määrä: ");
-                int kk = Integer.parseInt(lukija.nextLine());
+                int kk = kysyKokonaisluku(1, 999999999);
                 saasto.setKuukausiMaara(kk);
                 break;
             } else {
@@ -311,45 +361,127 @@ public class Kayttoliittyma {
         }
     }
 
-    public String listaaKaikkiTapahtumat() {
-        String tulostettava = "";
-        if (current.getVelat().isEmpty()) {
-            tulostettava += "Ei velkoja. \n";
-        } else {
-            tulostettava += "Velat: \n";
-            for (Tapahtuma c : current.getVelat()) {
-                tulostettava += c.toString() + " \n";
-            }
+    /**
+     * Metodi poistaa ohjelman käyttäjän valitseman säästön currentin
+     * tapahtumista.
+     */
+    public final void poistaSaasto() {
+        int i = 1;
+        for (Tapahtuma saasto : current.getSaastot()) {
+            System.out.print(i + ". " + saasto);
+            i++;
         }
-        if (current.getTulot().isEmpty()) {
-            tulostettava += "Ei tuloja. \n";
-        } else {
-            tulostettava += "Tulot: \n";
-            for (Tapahtuma c : current.getTulot()) {
-                tulostettava += c.toString() + " \n";
-            }
-        }
-        if (current.getSaastot().isEmpty()) {
-            tulostettava += "Ei säästöjä. \n";
-        } else {
-            tulostettava += "Säästöt: \n";
-            for (Tapahtuma c : current.getSaastot()) {
-                tulostettava += c.toString() + " \n";
-            }
-        }
-        if (current.getOstokset().isEmpty()) {
-            tulostettava += "Ei ostoksia. \n";
-        } else {
-            tulostettava += "Ostokset: \n";
-            for (Tapahtuma c : current.getSaastot()) {
-                tulostettava += c.toString() + " \n";
-            }
-        }
+        System.out.println("Syötä säästön järjestysnumero: ");
+        int syote = kysyKokonaisluku(1, current.getSaastot().size() + 1);
+        current.tapahtumat.remove(current.getSaastot().get(syote - 1));
+        System.out.println("Säästö poistettu.");
+    }
+    
+    /**
+     * Mikäli etodi käy läpi käyttäjän valitsemat currentin tapahtumat ja palauttaa 
+     * ne pitkänä merkkijonona.
+     */
 
-        return tulostettava;
+    public final void tapahtumaToiminnot() {
+        System.out.println("Valitse seuraavista:");
+        System.out.println("");
+        System.out.println("Kaikki tietyn tyyppiset tapahtumat syöttämällä 2");
+        System.out.println("Tulosta kaikki tapahtumat syöttämällä 3");
+        System.out.println("Takaisin syöttämällä x");
+        String syote = lukija.nextLine();
+        if (syote.equals("x")) {
+            return;
+        } else if (syote.equals("1")) {
+            yksittaisenTapahtumanHallinta();
+        } else if (syote.equals("2")) {
+        System.out.println("Mitä seuraavista haluat tulostaa?");
+        System.out.println("Kertaostokset, syötä 1");
+        System.out.println("Tulot, syötä 2");
+        System.out.println("Velat, syötä 3");
+        System.out.println("Säästöt, syötä 4");
+            int luku = kysyKokonaisluku(1, 4);
+            if (luku == 1) {
+               listaaTapahtumat(true, false, false, false); 
+            } else if (luku == 2) {
+                listaaTapahtumat(false, false, true, false);
+            } else if (luku == 3) {
+                listaaTapahtumat(false, true, false, false);
+            } else if (luku == 4) {
+                listaaTapahtumat(false, false, false, true);
+            }
+        } else if (syote.equals("3")) {
+            listaaTapahtumat(true, true, true, true);
+        } else {
+            System.out.println("Anna kunnon syöte.");
+        }
     }
 
-    public boolean salasananTarkistus(String s) {
+    /**
+     * @param ostot on true, mikäli käyttäjä haluaa ostonsa tulostettavan
+     * @param velat on true, mikäli käyttäjä haluaa velkansa tulostettavan
+     * @param tulot on true, mikäli käyttäjä haluaa tulonsa tulostettavan
+     * @param saastot on true, mikäli käyttäjä haluaa säästönsä tulostettavan
+     *
+     * Metodi käy läpi kaikki currentin tapahtumat ja tulostaa ne pitkänä
+     * merkkijonona.
+     */
+    public final void listaaTapahtumat(boolean ostot, boolean velat,
+            boolean tulot, boolean saastot) {
+        String tulostettava = "";
+        if (velat) {
+            if (current.getVelat().isEmpty()) {
+                tulostettava += "Ei velkoja. \n";
+            } else {
+                tulostettava += "Velat: \n";
+                for (Tapahtuma c : current.getVelat()) {
+                    tulostettava += c.toString() + " \n";
+                }
+            }
+        }
+        if (tulot) {
+            if (current.getTulot().isEmpty()) {
+                tulostettava += "Ei tuloja. \n";
+            } else {
+                tulostettava += "Tulot: \n";
+                for (Tapahtuma c : current.getTulot()) {
+                    tulostettava += c.toString() + " \n";
+                }
+            }
+        }
+        if (saastot) {
+            if (current.getSaastot().isEmpty()) {
+                tulostettava += "Ei säästöjä. \n";
+            } else {
+                tulostettava += "Säästöt: \n";
+                for (Tapahtuma c : current.getSaastot()) {
+                    tulostettava += c.toString() + " \n";
+                }
+            }
+        }
+        if (ostot) {
+            if (current.getOstokset().isEmpty()) {
+                tulostettava += "Ei ostoksia. \n";
+            } else {
+                tulostettava += "Ostokset: \n";
+                for (Tapahtuma c : current.getOstokset()) {
+                    tulostettava += c.toString() + " \n";
+                }
+            }
+        }
+        System.out.println(tulostettava);
+    }
+
+    public final void yksittaisenTapahtumanHallinta() {
+        System.out.println("Valitse tapahtumasi");
+    }
+    
+    /**
+     * Metodi tarkistaa, onko parametrina annettu salasana jonkun
+     * kayttajat-listan olion salasana.
+     *
+     * @return onko kenelläkään syötettyä salasanaa.
+     */
+    public final boolean salasananTarkistus(String s) {
         for (Kayttaja k : kayttajat) {
             if (k.salasana.equals(s)) {
                 return false;
@@ -358,7 +490,12 @@ public class Kayttoliittyma {
         return true;
     }
 
-    public void vaihdaSalasana(String salasana) {
+    /**
+     * Metodi pyytää vanhaa salasanaa, jota ohjelma vertaa kirjautuneen
+     * käyttäjän syöttämään salasanaan. Tämän jälkeen ohjelma pyytää uutta
+     * salasanaa ja liittää sen kirjautuneen käyttäjän salasanaksi.
+     */
+    public final void vaihdaSalasana(String salasana) {
         System.out.println("Syötä vanha salasana: ");
 
         String vanha = lukija.nextLine();
@@ -375,7 +512,12 @@ public class Kayttoliittyma {
 
     }
 
-    public void uudenKayttajanLisays() {
+    /**
+     * Metodi kysyy ohjelman käyttäjältä, haluaako tämä lisätä henkilön, perheen
+     * vai yrityksen ja kutsuu saamansa syötteen perusteella kyseisen
+     * käyttäjätyypin lisäysmetodia.
+     */
+    public final void uudenKayttajanLisays() {
         while (true) {
             System.out.println("Henkilo 1");
             System.out.println("Perhe 2");
@@ -394,12 +536,23 @@ public class Kayttoliittyma {
             } else if (tyyppi.equals("x")) {
                 break;
             } else {
-                System.out.println("Valitse jokin alla olevista vaihtoehdoista:");
+                System.out.println("Valitse jokin alla olevista "
+                        + "vaihtoehdoista:");
             }
         }
     }
 
-    public void poistaKayttaja() {
+    /**
+     * Metodi kysyy ohjelman käyttäjältä poistettavan käyttäjän salasanaa ja
+     * mikäli salasana on tällä hetkellä kirjautuneena olevan käyttäjän
+     * salasana, käyttäjä kirjautuu ulos. Tämän jälkeen salasanaa vastaava
+     * käyttäjä poistetaan. Mikäli salasanaa ei ole kenelläkään luodulla
+     * käyttäjällä, metodi ilmoittaa salasanan virheellisyydestä ja palaa
+     * takaisin valikkoon, josta metodiin päädyttiin.
+     *
+     * @throws java.io.IOException
+     */
+    public final void poistaKayttaja() throws IOException {
         System.out.println("Syötä poistettavan käyttäjän salasana: ");
         String salasana = lukija.nextLine();
         boolean onnistui = false;
@@ -409,6 +562,7 @@ public class Kayttoliittyma {
                     current = null;
                 }
                 kayttajat.remove(kayttaja);
+                tietojenTallennus();
                 System.out.println("Käyttäjä poistettu.");
                 onnistui = true;
                 break;
@@ -419,7 +573,12 @@ public class Kayttoliittyma {
         }
     }
 
-    public void uudenHenkilonLisays() {
+    /**
+     * Metodi kysyy ohjelman käyttäjältä lisättävän henkilön tiedot, luo
+     * Henkilo- olion ja lisää sen kayttajat-listaan. Luotu henkilö kirjataan
+     * samalla sisään.
+     */
+    public final void uudenHenkilonLisays() {
 
         System.out.println("Etunimi: ");
         String etunimi = lukija.nextLine();
@@ -440,7 +599,14 @@ public class Kayttoliittyma {
         }
     }
 
-    public void uudenPerheenLisays() {
+    /**
+     * Metodi luo aluksi perhe-olion, kysyy ohjelman käyttäjältä lisättävien
+     * henkilöiden salasanoja ja lisää salasanoja vastaavat henkilöt perheeseen.
+     * Kun käyttäjä on lisännyt haluamansa henkilöt luotavaan perheeseen, metodi
+     * pyytää keksimään perheelle vielä uuden salasanan ennen kuin se lisätään
+     * kayttajat-listaan ja asetetaan currentiksi.
+     */
+    public final void uudenPerheenLisays() {
         Perhe perhe = new Perhe();
         while (true) {
             System.out.println("Lisää henkilö perheeseen 1");
@@ -457,7 +623,8 @@ public class Kayttoliittyma {
                         System.out.println("Perhe luotu.");
                         break;
                     }
-                    System.out.println("Salasana käytössä. Anna toinen salasana: ");
+                    System.out.println("Salasana käytössä. Anna toinen"
+                            + " salasana: ");
                 }
                 break;
             } else if (syote2.equals("1")) {
@@ -465,7 +632,8 @@ public class Kayttoliittyma {
                 String salasana = lukija.nextLine();
                 boolean onnistui = false;
                 for (Kayttaja kayttaja : kayttajat) {
-                    if (kayttaja.salasana.equals(salasana) && kayttaja instanceof Henkilo) {
+                    if (kayttaja.salasana.equals(salasana)
+                            && kayttaja instanceof Henkilo) {
                         onnistui = true;
                         System.out.println(kayttaja + " lisätty perheeseen.");
                         perhe.lisaaHenkilo((Henkilo) kayttaja);
@@ -473,7 +641,8 @@ public class Kayttoliittyma {
                     }
                 }
                 if (!onnistui) {
-                    System.out.println("Antamallasi salasanalla ei löydy henkilöä.");
+                    System.out.println("Antamallasi salasanalla ei löydy "
+                            + "henkilöä.");
                 }
 
             } else {
@@ -482,7 +651,12 @@ public class Kayttoliittyma {
         }
     }
 
-    public void uudenYrityksenLisays() {
+    /**
+     * Metodi kysyy ohjelman käyttäjältä lisättävän yrityksen tiedot, luo
+     * Yritys- olion ja lisää sen kayttajat-listaan. Luotu yritys kirjataan
+     * samalla sisään.
+     */
+    public final void uudenYrityksenLisays() {
         System.out.println("Anna yrityksen nimi: ");
         String nimi = lukija.nextLine();
         System.out.println("Anna yrityksen y-tunnus: ");
@@ -494,6 +668,57 @@ public class Kayttoliittyma {
         System.out.println("Yritys " + yritys + " luotu.");
         kayttajat.add(yritys);
         current = yritys;
+    }
+
+    /**
+     * @param a luvun alaraja
+     * @param b luvun yläraja
+     *
+     * Tämä apumetodi kysyy ohjelman käyttäjältä lukua, muokkaa sen
+     * desimaaliluvuksi ja heittää poikkeuksen, mikäli ohjelman käyttäjä syöttää
+     * jotain muuta kuin välillä [a,b] luvun.
+     *
+     * @return ohjelman käyttäjän syöttämä luku
+     */
+    public final double kysyLuku(int a, int b) {
+        while (true) {
+            try {
+                double luku = Double.parseDouble(lukija.nextLine().replace(",", "."));
+                if (luku >= a && luku <= b) {
+                    return luku;
+                } else {
+                    System.out.println("Syötä luku, joka on välillä [" + a + ","
+                            + b + "].");
+                }
+            } catch (Exception poikkeus) {
+                System.out.println("Syötä kunnollinen luku!");
+            }
+        }
+    }
+
+    /**
+     * @param a luvun alaraja
+     * @param b luvun yläraja
+     *
+     * Tämä apumetodi kysyy ohjelman käyttäjältä lukua ja heittää poikkeuksen,
+     * mikäli ohjelman käyttäjä syöttää jotain muuta kuin kokonaisluvun.
+     *
+     * @return ohjelman käyttäjän syöttämä luku
+     */
+    public final int kysyKokonaisluku(int a, int b) {
+        while (true) {
+            try {
+                int luku = Integer.parseInt(lukija.nextLine());
+                if (luku >= a && luku <= b) {
+                    return luku;
+                } else {
+                    System.out.println("Syötä luku, joka on välillä [" + a + ","
+                            + b + "].");
+                }
+            } catch (Exception poikkeus) {
+                System.out.println("Syötä kunnollinen luku!");
+            }
+        }
     }
 
 }

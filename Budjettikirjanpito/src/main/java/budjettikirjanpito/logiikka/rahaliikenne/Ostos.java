@@ -9,4 +9,6 @@ public class Ostos extends Tapahtuma {
         super(maara, selitys);
     }
     
+    
+    
 }

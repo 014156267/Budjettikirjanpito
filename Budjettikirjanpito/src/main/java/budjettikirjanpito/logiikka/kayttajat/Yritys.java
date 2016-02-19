@@ -1,6 +1,6 @@
 package budjettikirjanpito.logiikka.kayttajat;
 
-public class Yritys extends Kayttaja{
+public class Yritys extends Kayttaja {
     
     private String nimi;
     private String ytunnus;
@@ -11,24 +11,23 @@ public class Yritys extends Kayttaja{
         this.ytunnus = ytunnus;
     }
 
-    public String getNimi() {
+    public final String getNimi() {
         return nimi;
     }
 
-    public String getYtunnus() {
+    public final String getYtunnus() {
         return ytunnus;
     }
 
-    public void setNimi(String nimi) {
+    public final void setNimi(String nimi) {
         this.nimi = nimi;
     }
 
-    public void setYtunnus(String ytunnus) {
+    public final void setYtunnus(String ytunnus) {
         this.ytunnus = ytunnus;
     }
     
-    public String toString() {
+    public final String toString() {
         return nimi;
     }
-    
 }

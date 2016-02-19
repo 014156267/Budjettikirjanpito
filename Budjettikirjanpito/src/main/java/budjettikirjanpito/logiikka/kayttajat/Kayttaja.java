@@ -24,17 +24,18 @@ public abstract class Kayttaja implements Serializable {
         salasana = "";
     }
 
-    public void setSalasana(String salasana) {
+    public final void setSalasana(String salasana) {
         this.salasana = salasana;
     }
     
-                /**
- * getKuukaudenMenotYhteensa() laskee käyttäjän ostosten ja velkojen kuukausimaksujen summan.
+    /**
+ * getKuukaudenMenotYhteensa() laskee käyttäjän ostosten ja velkojen 
+ * kuukausimaksujen summan.
  * 
  * @return ostosten ja velkojen kuukausimaksujen summa
  */
 
-    public double getKuukaudenMenotYhteensa() {
+    public final double getKuukaudenMenotYhteensa() {
         double yht = 0;
         for (Tapahtuma v : getVelat()) {
             Velka velka = (Velka) v;
@@ -45,14 +46,14 @@ public abstract class Kayttaja implements Serializable {
         }
         return yht;
     }
-
-                    /**
+    
+    /**
  * getKuukaudenTulotYhteensa() laskee käyttäjän tulojen summan.
- * 
+ *
  * @return tulojen summa
  */
-    
-    public double getKuukaudenTulotYhteensa() {
+
+    public final double getKuukaudenTulotYhteensa() {
         double yht = 0;
         for (Tapahtuma t : getTulot()) {
             yht += t.maara;
@@ -60,17 +61,17 @@ public abstract class Kayttaja implements Serializable {
         return yht;
     }
     
-                    /**
+    /**
  * Metodi laskee käyttäjän tämänhetkisen rahatilanteen laskemalla getKuukaudenTulot() - getKuukaudenMenot().
  * 
  * @return tulojen ja menojen erotus
  */
     
-    public double getRahatilanne() {
+    public final double getRahatilanne() {
         return (getKuukaudenTulotYhteensa() - getKuukaudenMenotYhteensa());
     }
 
-    public ArrayList<Tapahtuma> getVelat() {
+    public final ArrayList<Tapahtuma> getVelat() {
         ArrayList<Tapahtuma> listattavatTapahtumat = new ArrayList<>();
         for (Tapahtuma t : tapahtumat) {
             if (t instanceof Velka) {
@@ -80,7 +81,7 @@ public abstract class Kayttaja implements Serializable {
         return listattavatTapahtumat;
     }
 
-    public ArrayList<Tapahtuma> getTulot() {
+    public final ArrayList<Tapahtuma> getTulot() {
         ArrayList<Tapahtuma> listattavatTapahtumat = new ArrayList<>();
         for (Tapahtuma t : tapahtumat) {
             if (t instanceof Tulo) {
@@ -90,7 +91,7 @@ public abstract class Kayttaja implements Serializable {
         return listattavatTapahtumat;
     }
 
-    public ArrayList<Tapahtuma> getSaastot() {
+    public final ArrayList<Tapahtuma> getSaastot() {
         ArrayList<Tapahtuma> listattavatTapahtumat = new ArrayList<>();
         for (Tapahtuma t : tapahtumat) {
             if (t instanceof Saasto) {
@@ -100,7 +101,7 @@ public abstract class Kayttaja implements Serializable {
         return listattavatTapahtumat;
     }
 
-    public ArrayList<Tapahtuma> getOstokset() {
+    public final ArrayList<Tapahtuma> getOstokset() {
         ArrayList<Tapahtuma> listattavatTapahtumat = new ArrayList<>();
         for (Tapahtuma t : tapahtumat) {
             if (t instanceof Ostos) {

@@ -17,3 +17,6 @@ Ohjelmassa on Pääohjelma, Kayttaja ja Tapahtuma. Käyttäjän aliluokat Henkilo, Pe
 
 
 ![Luokkakaavio](Luokkakaavio.png)
+![Kirjautuminen](Kirjautuminen.png)
+![Uuden Henkilön lisäys](Uuden henkilön lisäys.png)
+![Tapahtuman poisto](Tapahtuman poisto.png)

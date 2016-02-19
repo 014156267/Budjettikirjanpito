@@ -1,8 +1,5 @@
  package budjettikirjanpito.logiikka.kayttajat;
 
-import budjettikirjanpito.logiikka.rahaliikenne.Tapahtuma;
-import budjettikirjanpito.logiikka.rahaliikenne.Velka;
-
  /**
  * Henkilolla on Kayttaja-luokalta perittyjen salasanan ja tapahtumalistan
  * lisäksi etu- ja sukunimi.
@@ -10,8 +7,8 @@ import budjettikirjanpito.logiikka.rahaliikenne.Velka;
  
 public class Henkilo extends Kayttaja {
 
-    private String etunimi;
-    private String sukunimi;
+    private final String etunimi;
+    private final String sukunimi;
 
     public Henkilo(String etunimi, String sukunimi) {
         super();
@@ -19,13 +16,10 @@ public class Henkilo extends Kayttaja {
         this.sukunimi = sukunimi;
     }
     
-
     @Override
     public String toString() {
         String tulostettava = "";
         tulostettava += etunimi + " " + sukunimi;
         return tulostettava;
-
     }
-
 }
