@@ -30,5 +30,15 @@
   - Käyttäjäluokan pustaus tulostusmetodeista, käyttöliittymän siistimistä.
 * To 11.2. klo 14-16
   - Käyttöliittymän siistimistä
-* Pe 5.2. klo 17-24
+* Pe 12.2. klo 17-24
   - Testien tekoa, käyttöliittymää, checkstylen kanssa tappelemista huonolla menestyksellä, pitin ja tuntikirjanpidon päivitys.
+
+**Viikko 5**
+
+* Ke 17.2. klo 14-16
+  - Pajassa neuvoja, mutta koska ohjausta ei näkynyt olevan, käyttöliittymän suunnittelua.
+* To 18.2. klo 16-18, klo 20-24
+  - Checkstyle-raportin luontimahdollisuus (viimeviikolta rästissä). Käyttäjän syöttämien lukujen oikeellisuuden tarkastusmetodien luontia.
+  - Illalla sekvenssikaavioiden luontia.
+* Pe 19.2. klo 14-24
+  - Käyttöliittymän siistimistä ja kehittämistä, koko ohjelman siistimistä torstaina 18.2. luodun checkstyle-raportin perusteella, javadockien luomista, uusi pit- ja checkstyle-raportti sekä muun dokumentaation päivitys.
