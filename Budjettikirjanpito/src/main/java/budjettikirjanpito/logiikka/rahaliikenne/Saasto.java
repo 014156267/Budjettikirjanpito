@@ -46,6 +46,10 @@ public class Saasto extends Tapahtuma {
     public final double getKuukausiSumma() {
         return kuukausisumma;
     }
+    
+    public final String getKuukausiSummaString() {
+        return muotoilu.format(kuukausisumma);
+    }
 
     public final int getKuukausiMaara() {
         return kuukausimaara;

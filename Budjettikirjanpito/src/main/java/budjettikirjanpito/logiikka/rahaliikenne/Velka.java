@@ -34,7 +34,11 @@ public class Velka extends Tapahtuma {
         paljonko -= (kk * kkera);
         return paljonko;
     }
-
+    
+    public String paljonkoVelkaaJaljellaXKkPaastaString(int kk) {
+        return muotoilu.format(paljonkoVelkaaJaljellaXKkPaasta(kk));
+    }
+    
     /**
      * Metodi kertoo, kuinka paljon korkoja kyseisestä velasta joudutaan tässä
      * kuussa korkoineen maksamaan. Kuukausittainen korkomäärä päivitetään velan
@@ -49,6 +53,10 @@ public class Velka extends Tapahtuma {
         double lyhennettava = kuukaudenLyhennysEra() + ((kerroin * maara) / 12);
         return lyhennettava;
     }
+    
+    public String kuukausimaksuString() {
+        return muotoilu.format(kuukausimaksu());
+    }
 
     /**
      * Metodi kertoo, paljonko käyttäjä lyhentää velan pääomaa kuukaudessa.
@@ -58,6 +66,10 @@ public class Velka extends Tapahtuma {
     public double kuukaudenLyhennysEra() {
         double kkera = maara / (double) lyhennysaikakk;
         return kkera;
+    }
+    
+    public String kuukaudenLyhennysEraString() {
+        return muotoilu.format(kuukaudenLyhennysEra());
     }
 
     /**
@@ -89,6 +101,10 @@ public class Velka extends Tapahtuma {
         }
         return summa;
     }
+    
+    public final String velanKorkoYhteensaString() {
+        return muotoilu.format(velanKorkoYhteensa());
+    }
 
     public final int getLyhennysaika() {
         return lyhennysaikakk;
@@ -102,6 +118,10 @@ public class Velka extends Tapahtuma {
         return vuosikorko;
     }
 
+    public final String getVuosikorkoString() {
+        return muotoilu.format(getVuosikorko());
+    }
+    
     public final void setVuosikorko(double uusikorko) {
         vuosikorko = uusikorko;
     }

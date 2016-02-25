@@ -6,6 +6,7 @@ import budjettikirjanpito.logiikka.rahaliikenne.Tapahtuma;
 import budjettikirjanpito.logiikka.rahaliikenne.Tulo;
 import budjettikirjanpito.logiikka.rahaliikenne.Velka;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -15,15 +16,22 @@ import java.util.ArrayList;
  *
  */
 public abstract class Kayttaja implements Serializable {
-
+    public DecimalFormat muotoilu;
     public ArrayList<Tapahtuma> tapahtumat;
+    public String tunnus;
     public String salasana;
 
     public Kayttaja() {
+        muotoilu = new DecimalFormat("###.##");
         tapahtumat = new ArrayList<>();
+        tunnus = "";
         salasana = "";
     }
 
+    public final void setTunnus(String tunnus) {
+        this.tunnus = tunnus;
+    }
+    
     public final void setSalasana(String salasana) {
         this.salasana = salasana;
     }
@@ -47,6 +55,10 @@ public abstract class Kayttaja implements Serializable {
         return yht;
     }
     
+     public final String getKuukaudenMenotYhteensaString() {
+         return muotoilu.format(getKuukaudenMenotYhteensa());
+     }
+    
     /**
  * getKuukaudenTulotYhteensa() laskee käyttäjän tulojen summan.
  *
@@ -61,6 +73,10 @@ public abstract class Kayttaja implements Serializable {
         return yht;
     }
     
+    public final String getKuukaudenTulotYhteensaString() {
+         return muotoilu.format(getKuukaudenTulotYhteensa());
+     }
+    
     /**
  * Metodi laskee käyttäjän tämänhetkisen rahatilanteen laskemalla getKuukaudenTulot() - getKuukaudenMenot().
  * 
@@ -69,6 +85,10 @@ public abstract class Kayttaja implements Serializable {
     
     public final double getRahatilanne() {
         return (getKuukaudenTulotYhteensa() - getKuukaudenMenotYhteensa());
+    }
+    
+    public final String getRahatilanneString() {
+        return muotoilu.format(getRahatilanne());
     }
 
     public final ArrayList<Tapahtuma> getVelat() {

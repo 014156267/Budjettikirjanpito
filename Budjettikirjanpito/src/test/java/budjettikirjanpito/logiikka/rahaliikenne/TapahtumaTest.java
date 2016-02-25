@@ -43,6 +43,6 @@ public class TapahtumaTest {
     @Test
     public void toStringToimii() {
 
-        assertEquals("Määrä: 10.5\nSelitys: Shakkilaudan osto", tapahtuma.toString());
+        assertEquals("Määrä: 10,5\nSelitys: Shakkilaudan osto", tapahtuma.toString());
     }
 }
