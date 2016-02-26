@@ -51,12 +51,14 @@
   - Käyttöliittymän tekoa
   - Tallennusominaisuuden kehitystä
 * To 25.2. klo 5:45-10:30
-  - Käyttöliittymän siistimistä
+  - Käyttöliittymän siistimistä ja koodausta.
            klo 12-13:30
   - Demot
 * Pe 26.2. klo 8-14
   - Käyttöliittymän kehitystä
   - Luokka- ja sekvenssikaavioiden uusimista
   - Jar-tiedoston luonti ja muun dokumentaation päivitys
+           klo 19-20:30
+  - Checkstyle-raportin tutkintaa. Ohjeistitte ottamaan käyttöliittymän pois checkstylen alta. Minulla checkstyle.xml ja mysuppressions.xml -tiedostoihin tehdyt muutokset eivät auttaneet. Eli en saanut otettua käyttöliittymäluokkia pois raportista ja logiikka ei juuri ole muuttunut. Sitä siistin jo viime viikolla, vaikka siinä on edelleen paljon virheitä. Olisi kiva saada kommenttia, onko logiikkaa tarpeen siistiä, kun checkstyle puhuu riviväleistä, maagisista numeroista, finaaleista ja liian pitkistä riveistä (jotka muutin yksitellen lyhyiksi, mutta painettuani Shift+Alt+F kaikki palasi kiltisti ennalleen)?
   
 
