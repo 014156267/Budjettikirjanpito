@@ -9,4 +9,6 @@
         <Tiedostosi1>.java" checks="[a-zA-Z0-9]*"/>
             <suppress files="
                 <Tiedostosi2>.java" checks="[a-zA-Z0-9]*"/>
+				<suppress checks="." files="[\\/]gui[\\/].*\.java$"/>
+<suppress checks="." files="[\\/]database[\\/].*\.java$"/>
 </suppressions>

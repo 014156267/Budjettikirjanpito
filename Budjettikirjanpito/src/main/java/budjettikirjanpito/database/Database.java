@@ -1,5 +1,6 @@
-package budjettikirjanpito.gui;
+package budjettikirjanpito.database;
 
+import budjettikirjanpito.gui.Kayttoliittyma;
 import budjettikirjanpito.logiikka.kayttajat.Henkilo;
 import budjettikirjanpito.logiikka.kayttajat.Kayttaja;
 import budjettikirjanpito.logiikka.kayttajat.Perhe;
@@ -40,6 +41,20 @@ public class Database {
         }
     }
 
+    /**
+     * Metodille annetaan parametrina sen Henkilo-olion käyttäjätunnus, joka
+     * halutaan palauttaa. Metodi katsoo, onko olemassa tiedosto muotoa 
+     * tunnus.ser ja jos on, metodi katsoo, onko siellä sisällä 
+     * Henkilo-tyyppinen olio ja palauttaa sen, mikäli on.
+     *
+     * @param tunnus Haettavan henkilön käyttäjätunnus
+     * 
+     * @return Palauttaa tunnusta vastaavan Henkilo-olion.
+     * 
+     * @throws java.io.FileNotFoundException
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     public static final Henkilo tietynHenkilonTietojenLataus(String tunnus)
             throws FileNotFoundException,
             IOException, ClassNotFoundException {
@@ -55,6 +70,21 @@ public class Database {
         }
         return null;
     }
+    
+    /**
+     * Metodille annetaan parametrina sen Kayttaja-olion käyttäjätunnus, joka
+     * halutaan palauttaa. Metodi katsoo, onko olemassa tiedosto muotoa 
+     * tunnus.ser ja jos on, metodi palauttaa kyseisen tiedoston sisältämän
+     * Kayttaja-olion.
+     *
+     * @param tunnus Haettavan käyttäjän käyttäjätunnus
+     * 
+     * @return Palauttaa tunnusta vastaavan Kayttaja-olion.
+     * 
+     * @throws java.io.FileNotFoundException
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
 
     public static final Kayttaja tietynTietojenLataus(String tunnus)
             throws FileNotFoundException,
@@ -69,7 +99,16 @@ public class Database {
         }
         return null;
     }
-
+        /**
+     *Metodi katsoo, onko olemassa tiedosto muotoa
+     * tunnus.ser ja jos on, metodi katsoo, onko siellä sisällä 
+     * Henkilo-tyyppinen olio ja palauttaa true, mikäli on.
+     * 
+     * @param tunnus on mahdollisen Henkilön käyttäjätunnus.
+     * 
+     * @return totuusarvo sille, että on olemassa 
+     * tunnusta vastaava Henkilo-olio.
+     */
     public static final boolean onkoHenkiloLuotu(String tunnus)
             throws FileNotFoundException, IOException, ClassNotFoundException {
         if (new File(tunnus + ".ser").exists()) {
@@ -84,7 +123,14 @@ public class Database {
         }
         return false;
     }
-
+     /**
+     *Metodi katsoo, onko olemassa tiedosto muotoa
+     * tunnus.ser ja jos on, metodi palauttaa true.
+     * 
+     * @param tunnus on mahdollisen Henkilön käyttäjätunnus.
+     * @return totuusarvo sille, että on olemassa tunnusta vastaava Kayttaja-
+     * olio.
+     */
     public static final boolean onkoKayttajaLuotu(String tunnus)
             throws FileNotFoundException, IOException, ClassNotFoundException {
         return (new File(tunnus + ".ser").exists());
@@ -141,6 +187,11 @@ public class Database {
         fos.close();
     }
 
+        /**
+     * Metodi hakee tällä hetkellä kirjautuneena olevan käyttäjän
+     * tietokannan ja poistaa sen.
+     *
+     */
     public static final void tietojenPoisto() {
         Kayttoliittyma.kayttajat.remove(Kayttoliittyma.current);
         File f = new File(Kayttoliittyma.current.tunnus + ".ser");

@@ -1,5 +1,6 @@
 package budjettikirjanpito.gui;
 
+import budjettikirjanpito.database.Database;
 import budjettikirjanpito.logiikka.kayttajat.Henkilo;
 import budjettikirjanpito.logiikka.kayttajat.Kayttaja;
 import budjettikirjanpito.logiikka.kayttajat.Perhe;
@@ -64,7 +65,7 @@ public class Kayttoliittyma {
                 } else if (syote.equals("1")) {
                     Kayttajanlisays.uudenKayttajanLisays();
                 } else if (syote.equals("2")) {
-                    sisaanKirjautuminen();
+                    Kirjautuminen.sisaanKirjautuminen();
                 } else {
                     System.out.println("Anna kunnon syöte.");
                 }
@@ -85,7 +86,7 @@ public class Kayttoliittyma {
                 } else if (syote.equals("2")) {
                     TapahtumanPoisto.poistaTapahtuma();
                 } else if (syote.equals("3")) {
-                    Toimintoja.tapahtumaToiminnot();
+                    TapahtumienHallinta.tapahtumaToiminnot();
                 } else if (syote.equals("4")) {
                     Database.tietojenTallennusEhdolla();
                     kayttajat.clear();
@@ -95,101 +96,6 @@ public class Kayttoliittyma {
                 } else {
                     System.out.println("Syötä kelvollinen syöte.");
                 }
-            }
-        }
-    }
-
-    /**
-     * Metodi mahdollistaa Ohjelman käyttäjän sisäänkirjautumisen.
-     */
-    public static final void sisaanKirjautuminen() throws IOException, FileNotFoundException, ClassNotFoundException {
-        System.out.println("\nSyötä käyttäjätunnuksesi: ");
-        String tunnus = lukija.nextLine();
-            if (Database.onkoKayttajaLuotu(tunnus)) {
-                Kayttaja k = Database.tietynTietojenLataus(tunnus);
-                System.out.println("\nSyötä salasanasi: ");
-                String salasana = lukija.nextLine();
-                if (k.salasana.equals(salasana)) {
-                    current = k;
-                    Database.tietojenLataus();
-                    if (k instanceof Perhe) {
-                        Perhe p = (Perhe) k;
-                        p.paivita();
-                        current = p;
-                    }
-                    
-                    System.out.println("\nTervetuloa " + k.toString() + "!");
-                    
-                    return;
-                } else {
-                    System.out.println("\nSyöttämäsi salasana ei täsmää "
-                            + "syöttämäsi käyttäjätunnuksen kanssa. Olet"
-                            + "han varmasti luonut tunnuksen? Jos et, syötä 1");
-                    return;
-                }
-            }
-        
-        System.out.println("Syöttämääsi käyttäjätunnusta ei ole.");
-    }
-
-    
-
-    
-
-    /**
-     * Metodi tarkistaa, onko parametrina annettu tunnus jonkun kayttajat-listan
-     * olion tunnus.
-     *
-     * @param s käyttäjän syöte
-     *
-     * @return onko syötettyä tunnusta olemassa.
-     */
-    public final boolean tunnuksenTarkistus(String s) {
-        for (Kayttaja k : kayttajat) {
-            if (k.tunnus.equals(s)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Metodi käy läpi kayttajat-listan ja tarkistaa, onko parametreina annettu
-     * tunnus ja salasana jonkun kayttajat-listan olion tunnus ja salasana.
-     *
-     * @param tunnus on syöte, jota verrataan yhdessä syötteen salasana kanssa
-     * aina vuorossa olevaan käyttäjät-listan alkion tunnukseen ja salasanaan.
-     * @param salasana on syöte, jota verrataan yhdessä syötteen tunnus kanssa
-     * aina vuorossa olevaan käyttäjät-listan alkion tunnukseen ja salasanaan.
-     *
-     * @return onko olemassa tunnusta, johon syötetty tunnus ja salasana
-     * täsmäävät.
-     */
-    public final boolean tasmaakoSalasanaTunnukseen(String tunnus, String salasana) {
-        for (Kayttaja k : kayttajat) {
-            if (k.tunnus.equals(tunnus) && k.salasana.equals(salasana)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Metodi pyytää vanhaa salasanaa, jota ohjelma vertaa kirjautuneen
-     * käyttäjän syöttämään salasanaan. Tämän jälkeen ohjelma pyytää uutta
-     * salasanaa ja liittää sen kirjautuneen käyttäjän salasanaksi.
-     */
-    public final void vaihdaSalasana(String salasana) {
-        System.out.println("Syötä vanha salasana: ");
-
-        String vanha = lukija.nextLine();
-        {
-            if (current.salasana.equals(vanha)) {
-                System.out.println("Syötä uusi salasana: ");
-                String uusi = lukija.nextLine();
-                current.setSalasana(uusi);
-            } else {
-                System.out.println("Salasana on virheellinen.");
             }
         }
     }

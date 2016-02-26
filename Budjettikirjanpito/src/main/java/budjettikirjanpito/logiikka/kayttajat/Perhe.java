@@ -1,6 +1,6 @@
 package budjettikirjanpito.logiikka.kayttajat;
 
-import budjettikirjanpito.gui.Database;
+import budjettikirjanpito.database.Database;
 import budjettikirjanpito.logiikka.rahaliikenne.Tapahtuma;
 import java.io.FileNotFoundException;
 import java.io.IOException;

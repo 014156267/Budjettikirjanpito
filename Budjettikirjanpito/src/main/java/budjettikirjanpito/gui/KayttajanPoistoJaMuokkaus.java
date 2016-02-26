@@ -1,5 +1,6 @@
 package budjettikirjanpito.gui;
 
+import budjettikirjanpito.database.Database;
 import budjettikirjanpito.logiikka.kayttajat.Kayttaja;
 import java.io.IOException;
 import java.util.ArrayList;
