@@ -16,6 +16,8 @@ public class Kayttajanlisays {
      * käyttäjätyypin lisäysmetodia.
      *
      * @throws java.io.IOException
+     * @throws java.io.FileNotFoundException
+     * @throws java.lang.ClassNotFoundException
      */
     public static final void uudenKayttajanLisays() throws IOException, FileNotFoundException, ClassNotFoundException {
         while (true) {
@@ -66,7 +68,6 @@ public class Kayttajanlisays {
                 String salasana = Kayttoliittyma.lukija.nextLine();
                 henkilo.salasana = salasana;
                 System.out.println("\nHenkilö " + henkilo + " luotu.");
-                Kayttoliittyma.kayttajat.add(henkilo);
                 Kayttoliittyma.current = henkilo;
                 break;
             }
@@ -127,7 +128,7 @@ public class Kayttajanlisays {
                     String salasana = Kayttoliittyma.lukija.nextLine();
                     if (kayttaja.salasana.equals(salasana)) {
                         System.out.println("\n" + kayttaja + " lisätty perheeseen.");
-                        perhe.lisaaHenkilo(kayttaja);
+                        perhe.lisaaHenkilo(kayttaja.tunnus);
                     } else {
                         System.out.println("\nVirheellinen salasana. Henkilöä"
                                 + " ei lisätty.");
@@ -165,7 +166,6 @@ public class Kayttajanlisays {
                 yritys.tunnus = tunnus;
                 yritys.salasana = salasana;
                 System.out.println("\nYritys " + yritys + " luotu.");
-                Kayttoliittyma.kayttajat.add(yritys);
                 Kayttoliittyma.current = yritys;
                 break;
             } else {

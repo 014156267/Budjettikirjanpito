@@ -1,10 +1,10 @@
 package budjettikirjanpito.logiikka.kayttajat;
 
 public class Yritys extends Kayttaja {
-    
+
     private String nimi;
     private String ytunnus;
-    
+
     public Yritys(String nimi, String ytunnus) {
         super();
         this.nimi = nimi;
@@ -26,7 +26,7 @@ public class Yritys extends Kayttaja {
     public final void setYtunnus(String ytunnus) {
         this.ytunnus = ytunnus;
     }
-    
+
     public final String toString() {
         return nimi;
     }

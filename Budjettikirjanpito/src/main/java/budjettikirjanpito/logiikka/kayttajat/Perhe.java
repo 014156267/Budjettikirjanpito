@@ -1,10 +1,13 @@
 package budjettikirjanpito.logiikka.kayttajat;
 
 import budjettikirjanpito.database.Database;
+import budjettikirjanpito.gui.Kayttoliittyma;
 import budjettikirjanpito.logiikka.rahaliikenne.Tapahtuma;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Perheellä on Kayttajalta peritty salasana ja tapahtumalista, ja perheeseen
@@ -13,42 +16,45 @@ import java.util.ArrayList;
  */
 public class Perhe extends Kayttaja {
 
-    public ArrayList<Henkilo> henkilot;
+    public ArrayList<String> tunnukset;
 
     public Perhe() {
         super();
-        henkilot = new ArrayList<>();
+        tunnukset = new ArrayList<>();
     }
 
-    public final void lisaaHenkilo(final Henkilo henkilo) {
-        henkilot.add(henkilo);
+    public final void lisaaHenkilo(String tunnus) {
+        tunnukset.add(tunnus);
     }
 
-    public final void paivita() throws IOException, FileNotFoundException, ClassNotFoundException {
-        ArrayList<String> tunnuksia = new ArrayList();
-        for (String t : getTunnukset()) {
-            tunnuksia.add(t);
-        }
-        henkilot.clear();
-        for (String tunnus : tunnuksia) {
-            if (Database.onkoHenkiloLuotu(tunnus)) {
-                lisaaHenkilo(Database.tietynHenkilonTietojenLataus(tunnus));
+    public final ArrayList<Henkilo> getHenkilot() throws IOException, FileNotFoundException, ClassNotFoundException {
+        ArrayList<Henkilo> palautus = new ArrayList();
+        for (String t : tunnukset) {
+            if (Database.onkoHenkiloLuotu(t)) {
+                palautus.add(Database.tietynHenkilonTietojenLataus(t));
             }
         }
+        return palautus;
+    }
 
+    public final ArrayList<String> poistetut() throws IOException, FileNotFoundException, ClassNotFoundException {
+        ArrayList<String> poistetut = new ArrayList();
+        for (String t : tunnukset) {
+            if (!Database.onkoHenkiloLuotu(t)) {
+                poistetut.add(t);
+            }
+        }
+        return poistetut;
     }
 
     public final ArrayList<String> getTunnukset() {
-        ArrayList<String> tunnukset = new ArrayList<>();
-        for (Henkilo t : henkilot) {
-            tunnukset.add(t.tunnus);
-        }
         return tunnukset;
     }
 
-    public final double getHenkiloidenVelatYhteensa() {
+    public final double getHenkiloidenVelatYhteensa() throws IOException, FileNotFoundException, ClassNotFoundException {
+        ArrayList<Henkilo> oliot = getHenkilot();
         double summa = 0;
-        for (Henkilo h : henkilot) {
+        for (Henkilo h : oliot) {
             for (Tapahtuma v : h.getVelat()) {
                 summa += v.maara;
             }
@@ -56,13 +62,14 @@ public class Perhe extends Kayttaja {
         return summa;
     }
 
-    public final String getHenkiloidenVelatYhteensaString() {
-        return muotoilu.format(getHenkiloidenVelatYhteensa());
+    public final String getHenkiloidenVelatYhteensaString() throws IOException, FileNotFoundException, ClassNotFoundException {
+        return Kayttoliittyma.muotoilu.format(getHenkiloidenVelatYhteensa());
     }
 
-    public final double getHenkiloidenTulotYhteensa() {
+    public final double getHenkiloidenTulotYhteensa() throws IOException, FileNotFoundException, ClassNotFoundException {
+        ArrayList<Henkilo> oliot = getHenkilot();
         double summa = 0;
-        for (Henkilo h : henkilot) {
+        for (Henkilo h : oliot) {
             for (Tapahtuma v : h.getTulot()) {
                 summa += v.maara;
             }
@@ -70,13 +77,14 @@ public class Perhe extends Kayttaja {
         return summa;
     }
 
-    public final String getHenkiloidenTulotYhteensaString() {
-        return muotoilu.format(getHenkiloidenTulotYhteensa());
+    public final String getHenkiloidenTulotYhteensaString() throws IOException, FileNotFoundException, ClassNotFoundException {
+        return Kayttoliittyma.muotoilu.format(getHenkiloidenTulotYhteensa());
     }
 
-    public final double getHenkiloidenOstotYhteensa() {
+    public final double getHenkiloidenOstotYhteensa() throws IOException, FileNotFoundException, ClassNotFoundException {
+        ArrayList<Henkilo> oliot = getHenkilot();
         double summa = 0;
-        for (Henkilo h : henkilot) {
+        for (Henkilo h : oliot) {
             for (Tapahtuma v : h.getOstokset()) {
                 summa += v.maara;
             }
@@ -84,16 +92,25 @@ public class Perhe extends Kayttaja {
         return summa;
     }
 
-    public final String getHenkiloidenOstotYhteensaString() {
-        return muotoilu.format(getHenkiloidenVelatYhteensa());
+    public final String getHenkiloidenOstotYhteensaString() throws IOException, FileNotFoundException, ClassNotFoundException {
+        return muotoilu.format(getHenkiloidenOstotYhteensa());
     }
 
     @Override
     public final String toString() {
-        String tulostettava = "Perhe: \n";
-        for (Henkilo h : henkilot) {
-            tulostettava += "\n" + h.toString();
+        ArrayList<Henkilo> oliot;
+        try {
+            oliot = getHenkilot();
+            String tulostettava = "Perhe: \n";
+            for (Henkilo h : oliot) {
+                tulostettava += "\n" + h.toString();
+            }
+            return tulostettava;
+        } catch (IOException ex) {
+            Logger.getLogger(Perhe.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Perhe.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return tulostettava;
+        return "";
     }
 }

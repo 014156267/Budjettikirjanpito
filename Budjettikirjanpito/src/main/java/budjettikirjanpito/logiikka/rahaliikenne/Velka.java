@@ -1,5 +1,7 @@
 package budjettikirjanpito.logiikka.rahaliikenne;
 
+import budjettikirjanpito.gui.Kayttoliittyma;
+
 /**
  * Luokassa on velan perustiedot attribuutteina sekä muutamia työkaluja velan ja
  * sen korkojen seuraamiseen.
@@ -34,11 +36,11 @@ public class Velka extends Tapahtuma {
         paljonko -= (kk * kkera);
         return paljonko;
     }
-    
+
     public String paljonkoVelkaaJaljellaXKkPaastaString(int kk) {
-        return muotoilu.format(paljonkoVelkaaJaljellaXKkPaasta(kk));
+        return Kayttoliittyma.muotoilu.format(paljonkoVelkaaJaljellaXKkPaasta(kk));
     }
-    
+
     /**
      * Metodi kertoo, kuinka paljon korkoja kyseisestä velasta joudutaan tässä
      * kuussa korkoineen maksamaan. Kuukausittainen korkomäärä päivitetään velan
@@ -53,9 +55,9 @@ public class Velka extends Tapahtuma {
         double lyhennettava = kuukaudenLyhennysEra() + ((kerroin * maara) / 12);
         return lyhennettava;
     }
-    
+
     public String kuukausimaksuString() {
-        return muotoilu.format(kuukausimaksu());
+        return Kayttoliittyma.muotoilu.format(kuukausimaksu());
     }
 
     /**
@@ -67,9 +69,9 @@ public class Velka extends Tapahtuma {
         double kkera = maara / (double) lyhennysaikakk;
         return kkera;
     }
-    
+
     public String kuukaudenLyhennysEraString() {
-        return muotoilu.format(kuukaudenLyhennysEra());
+        return Kayttoliittyma.muotoilu.format(kuukaudenLyhennysEra());
     }
 
     /**
@@ -89,8 +91,7 @@ public class Velka extends Tapahtuma {
         double paaoma = maara;
         while (true) {
             if (aikaaJaljella < vuodenkuukaudet) {
-                double lisattava = (((this.vuosikorko * paaoma) / (double) 
-                        prosernttienmaara)) * (aikaaJaljella / (double) 12);
+                double lisattava = (((this.vuosikorko * paaoma) / (double) prosernttienmaara)) * (aikaaJaljella / (double) 12);
                 summa += lisattava;
                 break;
             }
@@ -101,9 +102,9 @@ public class Velka extends Tapahtuma {
         }
         return summa;
     }
-    
+
     public final String velanKorkoYhteensaString() {
-        return muotoilu.format(velanKorkoYhteensa());
+        return Kayttoliittyma.muotoilu.format(velanKorkoYhteensa());
     }
 
     public final int getLyhennysaika() {
@@ -119,9 +120,9 @@ public class Velka extends Tapahtuma {
     }
 
     public final String getVuosikorkoString() {
-        return muotoilu.format(getVuosikorko());
+        return Kayttoliittyma.muotoilu.format(getVuosikorko());
     }
-    
+
     public final void setVuosikorko(double uusikorko) {
         vuosikorko = uusikorko;
     }

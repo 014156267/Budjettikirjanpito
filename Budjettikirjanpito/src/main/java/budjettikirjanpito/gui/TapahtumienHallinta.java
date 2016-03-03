@@ -6,17 +6,12 @@ import budjettikirjanpito.logiikka.rahaliikenne.Saasto;
 import budjettikirjanpito.logiikka.rahaliikenne.Tapahtuma;
 import budjettikirjanpito.logiikka.rahaliikenne.Tulo;
 import budjettikirjanpito.logiikka.rahaliikenne.Velka;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.DecimalFormat;
 
 public class TapahtumienHallinta {
 
-    public static DecimalFormat muotoilu;
-
-    public TapahtumienHallinta() {
-        muotoilu = new DecimalFormat("###.##");
-    }
-
-    
     /**
      * Tämä metodi listaa ohjelman käyttäjälle mahdollisuuden tutkia yksittäisen
      * tapahtuman tietoja, tulostaa tietyn tapahtumatyypin kaikki tapahtumat ja
@@ -26,7 +21,7 @@ public class TapahtumienHallinta {
      * tarkastelussa metodi kutsuu metodia yksittaisenTapahtumanHallinta().
      *
      */
-    public static final void tapahtumaToiminnot() {
+    public static final void tapahtumaToiminnot() throws IOException, FileNotFoundException, ClassNotFoundException {
         System.out.println("\nValitse seuraavista:");
         System.out.println("Siirry yksittäisen tapahtuman tarkasteluun "
                 + "syöttämällä 1");
@@ -48,7 +43,7 @@ public class TapahtumienHallinta {
         } else if (syote.equals("1")) {
             yksittaisenTapahtumanHallinta();
         } else if (syote.equals("2")) {
-            System.out.println("Mitä seuraavista haluat tulostaa?");
+            System.out.println("\nMitä seuraavista haluat tulostaa?");
             System.out.println("Kertaostokset, syötä 1");
             System.out.println("Tulot, syötä 2");
             System.out.println("Velat, syötä 3");
@@ -66,45 +61,44 @@ public class TapahtumienHallinta {
         } else if (syote.equals("3")) {
             TapahtumaTulostus.listaaTapahtumat(true, true, true, true);
         } else if (syote.equals("4")) {
-            System.out.println("Kuukauden menot "
-                    + "yhteensä: " + Kayttoliittyma.current.getKuukaudenMenotYhteensa());
+            System.out.println("\nKuukauden menot "
+                    + "yhteensä: " + Kayttoliittyma.current.getKuukaudenMenotYhteensaString());
         } else if (syote.equals("5")) {
-            System.out.println("Kuukauden tulot "
-                    + "yhteensä: " + Kayttoliittyma.current.getKuukaudenTulotYhteensa());
+            System.out.println("\nKuukauden tulot "
+                    + "yhteensä: " + Kayttoliittyma.current.getKuukaudenTulotYhteensaString());
         } else if (syote.equals("6")) {
-            System.out.println("Kuukauden tilanne: " + Kayttoliittyma.current.getRahatilanne());
+            System.out.println("\nKuukauden tilanne: " + Kayttoliittyma.current.getRahatilanneString());
         } else if (syote.equals("7") || syote.equals("8") || syote.equals("9")) {
             if (Kayttoliittyma.current instanceof Perhe) {
                 Perhe tutkittava = (Perhe) Kayttoliittyma.current;
                 if (syote.equals("7")) {
-                    System.out.println("Perheenjäsenillä velkaa yhteensä "
+                    System.out.println("\nPerheenjäsenillä velkaa yhteensä "
                             + tutkittava.getHenkiloidenVelatYhteensaString()
                             + " euroa.");
                 } else if (syote.equals("8")) {
-                    System.out.println("Perheenjäsenillä tuloja yhteensä "
+                    System.out.println("\nPerheenjäsenillä tuloja yhteensä "
                             + tutkittava.getHenkiloidenTulotYhteensaString()
                             + " euroa.");
                 } else if (syote.equals("9")) {
-                    System.out.println("Perheenjäsenillä ostoksia yhteensä "
+                    System.out.println("\nPerheenjäsenillä ostoksia yhteensä "
                             + tutkittava.getHenkiloidenOstotYhteensaString()
                             + " euron edestä.");
                 }
             } else {
-                System.out.println("Anna kunnon syöte.");
+                System.out.println("\nAnna kunnon syöte.");
             }
         } else {
-            System.out.println("Anna kunnon syöte.");
+            System.out.println("\nAnna kunnon syöte.");
         }
     }
-    
+
     /**
      * Metodi kysyy, minkä tyyppistä tapahtumaa ohjelman käyttäjä haluaa
      * tarkastella ja kutsuu sen perusteella sopivaa apumetodia.
      */
-
     public static final void yksittaisenTapahtumanHallinta() {
         while (true) {
-            System.out.println("Valitse tapahtumasi tyyppi: ");
+            System.out.println("\nValitse tapahtumasi tyyppi: ");
             System.out.println("Kertaostokset, syötä 1");
             System.out.println("Tulot, syötä 2");
             System.out.println("Velat, syötä 3");
@@ -129,10 +123,10 @@ public class TapahtumienHallinta {
         }
     }
 
-    /***
-     * 
+    /**
+     * *
+     *
      */
-    
     public static final void ostostenHallinta() {
         Ostos kasiteltava;
         if (Kayttoliittyma.current.getOstokset().isEmpty()) {
@@ -140,14 +134,14 @@ public class TapahtumienHallinta {
         } else if (Kayttoliittyma.current.getOstokset().size() == 1) {
             kasiteltava = (Ostos) Kayttoliittyma.current.getOstokset().get(0);
         } else {
-            System.out.println("Syötä tarkasteltavan ostoksen järjestysnumero.");
+            System.out.println("\nSyötä tarkasteltavan ostoksen järjestysnumero.");
             int syote = Toimintoja.kysyKokonaisluku(1,
                     Kayttoliittyma.current.getOstokset().size());
             kasiteltava
                     = (Ostos) Kayttoliittyma.current.getOstokset().get(syote - 1);
         }
         while (true) {
-            System.out.println("Ostoksen suuruus, syötä 1");
+            System.out.println("\nOstoksen suuruus, syötä 1");
             System.out.println("Ostoksen selitys, syötä 2");
             System.out.println("Takaisin, syötä 0");
             int luku = Toimintoja.kysyKokonaisluku(0, 2);
@@ -169,14 +163,14 @@ public class TapahtumienHallinta {
         } else if (Kayttoliittyma.current.getTulot().size() == 1) {
             kasiteltava = (Tulo) Kayttoliittyma.current.getTulot().get(0);
         } else {
-            System.out.println("Syötä tarkasteltavan tulon järjestysnumero. \n");
+            System.out.println("\nSyötä tarkasteltavan tulon järjestysnumero. \n");
             int syote = Toimintoja.kysyKokonaisluku(1,
                     Kayttoliittyma.current.getTulot().size());
             kasiteltava
                     = (Tulo) Kayttoliittyma.current.getTulot().get(syote - 1);
         }
         while (true) {
-            System.out.println("Tulon suuruus, syötä 1");
+            System.out.println("\nTulon suuruus, syötä 1");
             System.out.println("Tulon selitys, syötä 2");
             System.out.println("Tulon maksaja, syötä 3");
             System.out.println("Takaisin, syötä 0");
@@ -201,14 +195,14 @@ public class TapahtumienHallinta {
         } else if (Kayttoliittyma.current.getVelat().size() == 1) {
             kasiteltava = (Velka) Kayttoliittyma.current.getVelat().get(0);
         } else {
-            System.out.println("Syötä tarkasteltavan velan järjestysnumero. \n");
+            System.out.println("\nSyötä tarkasteltavan velan järjestysnumero. \n");
             int syote = Toimintoja.kysyKokonaisluku(1,
                     Kayttoliittyma.current.getVelat().size());
             kasiteltava
                     = (Velka) Kayttoliittyma.current.getVelat().get(syote - 1);
         }
         while (true) {
-            System.out.println("Velan suuruus, syötä 1");
+            System.out.println("\nVelan suuruus, syötä 1");
             System.out.println("Velan aihe, syötä 2");
             System.out.println("Velan selitys, syötä 3");
             System.out.println("Velan lyhennysaika, syötä 4");
@@ -223,31 +217,31 @@ public class TapahtumienHallinta {
             System.out.println("");
             int luku = Toimintoja.kysyKokonaisluku(0, 9);
             if (luku == 1) {
-                System.out.println(kasiteltava.getMaaraString());
+                System.out.println("\n" + kasiteltava.getMaaraString());
             } else if (luku == 2) {
-                System.out.println(kasiteltava.getAihe());
+                System.out.println("\n" + kasiteltava.getAihe());
             } else if (luku == 3) {
-                System.out.println(kasiteltava.getSelitys());
+                System.out.println("\n" + kasiteltava.getSelitys());
             } else if (luku == 4) {
-                System.out.println("Velan lyhennysaika on "
+                System.out.println("\nVelan lyhennysaika on "
                         + kasiteltava.getLyhennysaika() + " kuukautta.");
             } else if (luku == 5) {
-                System.out.println("Velan vuosikorko on "
+                System.out.println("\nVelan vuosikorko on "
                         + kasiteltava.getVuosikorkoString() + "%.");
             } else if (luku == 6) {
-                System.out.println("Velan kuukausimaksu on "
+                System.out.println("\nVelan kuukausimaksu on "
                         + kasiteltava.kuukausimaksuString() + " euroa.");
             } else if (luku == 7) {
-                System.out.println("Lyhennät varsinaista velkaa (ilman korkoja)"
+                System.out.println("\nLyhennät varsinaista velkaa (ilman korkoja)"
                         + " " + kasiteltava.kuukaudenLyhennysEraString() + " euroa kuukaudessa.");
             } else if (luku == 8) {
-                System.out.println("Määritä x: ");
+                System.out.println("\nMääritä x: ");
                 int kk = Toimintoja.kysyKokonaisluku(1, 999999999);
-                System.out.println("Velkaa on jäljellä "
+                System.out.println("\nVelkaa on jäljellä "
                         + kasiteltava.paljonkoVelkaaJaljellaXKkPaastaString(kk)
                         + " euroa " + kk + ":n kuukauden päästä.");
             } else if (luku == 9) {
-                System.out.println("Maksat tästä velasta korkomaksuja"
+                System.out.println("\nMaksat tästä velasta korkomaksuja"
                         + " yhteensä " + kasiteltava.velanKorkoYhteensaString()
                         + " euroa.");
             } else if (luku == 0) {
@@ -263,13 +257,13 @@ public class TapahtumienHallinta {
         } else if (Kayttoliittyma.current.getSaastot().size() == 1) {
             kasiteltava = (Saasto) Kayttoliittyma.current.getSaastot().get(0);
         } else {
-            System.out.println("Syötä tarkasteltavan säästön järjestysnumero.");
+            System.out.println("\nSyötä tarkasteltavan säästön järjestysnumero.");
             int syote = Toimintoja.kysyKokonaisluku(1,
                     Kayttoliittyma.current.getSaastot().size());
             kasiteltava = (Saasto) Kayttoliittyma.current.getSaastot().get(syote - 1);
         }
         while (true) {
-            System.out.println("Säästettävä summa kokonaisuudessaan, syötä 1");
+            System.out.println("\nSäästettävä summa kokonaisuudessaan, syötä 1");
             System.out.println("Säästön selitys, syötä 2");
             System.out.println("Sääston kuukausimäärä, syötä 3");
             System.out.println("Kuukaudessa säästettävä summa, syötä 4");

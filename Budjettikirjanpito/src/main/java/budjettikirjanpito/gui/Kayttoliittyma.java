@@ -28,13 +28,13 @@ import java.util.Scanner;
  * sijaitseva kayttajat.ser) päivittämisen.
  */
 public class Kayttoliittyma {
-    public static ArrayList<Kayttaja> kayttajat;
+
     public static Kayttaja current;
-    public static Scanner lukija =new Scanner(System.in);
+    public static Scanner lukija = new Scanner(System.in);
     private String tiedostonNimi;
+    public static DecimalFormat muotoilu = new DecimalFormat("###.##");
 
     public Kayttoliittyma() {
-        kayttajat = new ArrayList<>();
         current = null;
         tiedostonNimi = "";
     }
@@ -74,8 +74,10 @@ public class Kayttoliittyma {
                 System.out.println("Lisää tapahtuma syöttämällä 1");
                 System.out.println("Poista tapahtuma syöttämällä 2");
                 System.out.println("Tietoja tapahtumista syöttämällä 3");
-                System.out.println("Kirjaudu ulos syöttämällä 4");
-                System.out.println("Poista käyttäjä syöttämällä 5");
+                System.out.println("Omat tiedot syöttämällä 4");
+                System.out.println("Kirjaudu ulos syöttämällä 5");
+                System.out.println("Vaihda salasana syöttämällä 6");
+                System.out.println("Poista käyttäjä syöttämällä 7");
                 System.out.println("Lopeta syöttämällä x");
                 String syote = lukija.nextLine();
                 if (syote.equals("x")) {
@@ -88,10 +90,13 @@ public class Kayttoliittyma {
                 } else if (syote.equals("3")) {
                     TapahtumienHallinta.tapahtumaToiminnot();
                 } else if (syote.equals("4")) {
-                    Database.tietojenTallennusEhdolla();
-                    kayttajat.clear();
-                    current = null; 
+                    System.out.println("\n" + current.toString());
                 } else if (syote.equals("5")) {
+                    Database.tietojenTallennusEhdolla();
+                    current = null;
+                } else if (syote.equals("6")) {
+                    Toimintoja.vaihdaSalasana();
+                } else if (syote.equals("7")) {
                     KayttajanPoistoJaMuokkaus.poistaKayttaja();
                 } else {
                     System.out.println("Syötä kelvollinen syöte.");

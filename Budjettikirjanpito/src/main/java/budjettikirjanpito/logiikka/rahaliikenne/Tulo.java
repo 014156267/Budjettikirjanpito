@@ -1,4 +1,3 @@
-
 package budjettikirjanpito.logiikka.rahaliikenne;
 
 /**
@@ -6,9 +5,8 @@ package budjettikirjanpito.logiikka.rahaliikenne;
  * rahaliikenne käyttäjän suuntaan. Tulolla on Tapahtumalta perittyjen
  * attribuuttien lisäksi maksaja.
  */
+public class Tulo extends Tapahtuma {
 
-public class Tulo extends Tapahtuma{
-    
     public String maksaja;
 
     public Tulo(String maksaja, double maara, String selitys) {

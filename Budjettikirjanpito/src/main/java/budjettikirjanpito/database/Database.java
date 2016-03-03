@@ -43,14 +43,14 @@ public class Database {
 
     /**
      * Metodille annetaan parametrina sen Henkilo-olion käyttäjätunnus, joka
-     * halutaan palauttaa. Metodi katsoo, onko olemassa tiedosto muotoa 
-     * tunnus.ser ja jos on, metodi katsoo, onko siellä sisällä 
+     * halutaan palauttaa. Metodi katsoo, onko olemassa tiedosto muotoa
+     * tunnus.ser ja jos on, metodi katsoo, onko siellä sisällä
      * Henkilo-tyyppinen olio ja palauttaa sen, mikäli on.
      *
      * @param tunnus Haettavan henkilön käyttäjätunnus
-     * 
+     *
      * @return Palauttaa tunnusta vastaavan Henkilo-olion.
-     * 
+     *
      * @throws java.io.FileNotFoundException
      * @throws java.io.IOException
      * @throws java.lang.ClassNotFoundException
@@ -70,22 +70,21 @@ public class Database {
         }
         return null;
     }
-    
+
     /**
      * Metodille annetaan parametrina sen Kayttaja-olion käyttäjätunnus, joka
-     * halutaan palauttaa. Metodi katsoo, onko olemassa tiedosto muotoa 
+     * halutaan palauttaa. Metodi katsoo, onko olemassa tiedosto muotoa
      * tunnus.ser ja jos on, metodi palauttaa kyseisen tiedoston sisältämän
      * Kayttaja-olion.
      *
      * @param tunnus Haettavan käyttäjän käyttäjätunnus
-     * 
+     *
      * @return Palauttaa tunnusta vastaavan Kayttaja-olion.
-     * 
+     *
      * @throws java.io.FileNotFoundException
      * @throws java.io.IOException
      * @throws java.lang.ClassNotFoundException
      */
-
     public static final Kayttaja tietynTietojenLataus(String tunnus)
             throws FileNotFoundException,
             IOException, ClassNotFoundException {
@@ -99,15 +98,16 @@ public class Database {
         }
         return null;
     }
-        /**
-     *Metodi katsoo, onko olemassa tiedosto muotoa
-     * tunnus.ser ja jos on, metodi katsoo, onko siellä sisällä 
-     * Henkilo-tyyppinen olio ja palauttaa true, mikäli on.
-     * 
+
+    /**
+     * Metodi katsoo, onko olemassa tiedosto muotoa tunnus.ser ja jos on, metodi
+     * katsoo, onko siellä sisällä Henkilo-tyyppinen olio ja palauttaa true,
+     * mikäli on.
+     *
      * @param tunnus on mahdollisen Henkilön käyttäjätunnus.
-     * 
-     * @return totuusarvo sille, että on olemassa 
-     * tunnusta vastaava Henkilo-olio.
+     *
+     * @return totuusarvo sille, että on olemassa tunnusta vastaava
+     * Henkilo-olio.
      */
     public static final boolean onkoHenkiloLuotu(String tunnus)
             throws FileNotFoundException, IOException, ClassNotFoundException {
@@ -123,10 +123,11 @@ public class Database {
         }
         return false;
     }
-     /**
-     *Metodi katsoo, onko olemassa tiedosto muotoa
-     * tunnus.ser ja jos on, metodi palauttaa true.
-     * 
+
+    /**
+     * Metodi katsoo, onko olemassa tiedosto muotoa tunnus.ser ja jos on, metodi
+     * palauttaa true.
+     *
      * @param tunnus on mahdollisen Henkilön käyttäjätunnus.
      * @return totuusarvo sille, että on olemassa tunnusta vastaava Kayttaja-
      * olio.
@@ -144,7 +145,6 @@ public class Database {
             for (String tunnus : perhe.getTunnukset()) {
                 FileInputStream fis = new FileInputStream(tunnus + ".ser");
                 ObjectInputStream ois = new ObjectInputStream(fis);
-                Kayttoliittyma.kayttajat.add((Henkilo) ois.readObject());
                 ois.close();
                 fis.close();
             }
@@ -158,18 +158,18 @@ public class Database {
      * @throws java.io.FileNotFoundException
      */
     public static final void tietojenTallennusEhdolla() throws IOException {
-        System.out.println("Tallenetaanko muutokset? (k/e)");
+        System.out.println("\nTallenetaanko muutokset? (k/e)");
         while (true) {
             String vastaus = Kayttoliittyma.lukija.nextLine();
             if (vastaus.equals("k")) {
-                System.out.println("Tallennetaan...");
+                System.out.println("\nTallennetaan...");
                 tietojenTallennus();
                 System.out.println("Tallennettu.");
                 break;
             } else if (vastaus.equals("e")) {
                 break;
             } else {
-                System.out.println("Vastaa k tai e.");
+                System.out.println("\nVastaa k tai e.");
             }
         }
     }
@@ -187,13 +187,12 @@ public class Database {
         fos.close();
     }
 
-        /**
-     * Metodi hakee tällä hetkellä kirjautuneena olevan käyttäjän
-     * tietokannan ja poistaa sen.
+    /**
+     * Metodi hakee tällä hetkellä kirjautuneena olevan käyttäjän tietokannan ja
+     * poistaa sen.
      *
      */
     public static final void tietojenPoisto() {
-        Kayttoliittyma.kayttajat.remove(Kayttoliittyma.current);
         File f = new File(Kayttoliittyma.current.tunnus + ".ser");
         f.delete();
     }

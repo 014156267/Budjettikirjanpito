@@ -22,11 +22,9 @@ public class KayttajanPoistoJaMuokkaus {
         System.out.println("\nSyötä salasanasi: ");
         String salasana = Kayttoliittyma.lukija.nextLine();
         if (Kayttoliittyma.current.salasana.equals(salasana)) {
-            Kayttoliittyma.kayttajat.remove(Kayttoliittyma.current);
-            
             Database.tietojenPoisto();
             System.out.println("\n" + Kayttoliittyma.current.toString()
-                    + " poistettu." );
+                    + " poistettu.");
             Kayttoliittyma.current = null;
         } else {
             System.out.println("\nSalasana ei täsmää käyttäjätunnukseesi.");

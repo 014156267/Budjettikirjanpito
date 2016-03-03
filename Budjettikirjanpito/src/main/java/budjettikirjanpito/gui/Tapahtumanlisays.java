@@ -26,7 +26,7 @@ public class Tapahtumanlisays {
      *
      */
     public static final void lisaaTapahtuma() {
-        System.out.println("Valitse tapahtuma: ");
+        System.out.println("\nValitse tapahtuma: ");
         System.out.println("1. Kertaostos");
         System.out.println("2. Tulo");
         System.out.println("3. Velka");
@@ -51,9 +51,9 @@ public class Tapahtumanlisays {
      *
      */
     public static final void lisaaOstos() {
-        System.out.println("Ostoksen suuruus: ");
+        System.out.println("\nOstoksen suuruus: ");
         double maara = Toimintoja.kysyLuku(0, 999999999);
-        System.out.println("Selitys: ");
+        System.out.println("\nSelitys: ");
         String selitys = Kayttoliittyma.lukija.nextLine();
         Ostos ostos = new Ostos(maara, selitys);
         Kayttoliittyma.current.tapahtumat.add(ostos);
@@ -65,11 +65,11 @@ public class Tapahtumanlisays {
      *
      */
     public static final void lisaaTulo() {
-        System.out.println("Maksaja: ");
+        System.out.println("\nMaksaja: ");
         String maksaja = Kayttoliittyma.lukija.nextLine();
-        System.out.println("Tulon suuruus: ");
+        System.out.println("\nTulon suuruus: ");
         double maara = Toimintoja.kysyLuku(0, 999999999);
-        System.out.println("Selitys: ");
+        System.out.println("\nSelitys: ");
         String selitys = Kayttoliittyma.lukija.nextLine();
         Tulo tulo = new Tulo(maksaja, maara, selitys);
         Kayttoliittyma.current.tapahtumat.add(tulo);
@@ -81,17 +81,17 @@ public class Tapahtumanlisays {
      *
      */
     public static final void lisaaVelka() {
-        System.out.println("Velan suuruus: ");
+        System.out.println("\nVelan suuruus: ");
         double maara = Toimintoja.kysyLuku(0, 999999999);
-        System.out.println("Vuosikorko (prosentteina): ");
+        System.out.println("\nVuosikorko (prosentteina): ");
         double korko = Toimintoja.kysyLuku(0, 100);
-        System.out.println("Lyhennysaika (kuukausina): ");
+        System.out.println("\nLyhennysaika (kuukausina): ");
         int kk = Toimintoja.kysyKokonaisluku(1, 999999999);
         Velka velka = new Velka(maara, "", kk, korko);
-        System.out.println("Velan aihe: ");
+        System.out.println("\nVelan aihe: ");
         String aihe = Kayttoliittyma.lukija.nextLine();
         velka.setAihe(aihe);
-        System.out.println("Velan selitys: ");
+        System.out.println("\nVelan selitys: ");
         String selitys = Kayttoliittyma.lukija.nextLine();
         velka.setSelitys(selitys);
         Kayttoliittyma.current.tapahtumat.add(velka);
@@ -103,24 +103,24 @@ public class Tapahtumanlisays {
      *
      */
     public static final void lisaaSaasto() {
-        System.out.println("Säästön suuruus: ");
+        System.out.println("\nSäästön suuruus: ");
         double maara = Toimintoja.kysyLuku(0, 999999999);
-        System.out.println("Säästön selitys: ");
+        System.out.println("\nSäästön selitys: ");
         String selitys = Kayttoliittyma.lukija.nextLine();
         Saasto saasto = new Saasto(maara, selitys);
-        System.out.println("Haluatko määritellä kuukausisumman (syötä 1) vai"
+        System.out.println("\nHaluatko määritellä kuukausisumman (syötä 1) vai"
                 + " säästämisjakson pituuden (syötä 2)?");
-            int luku = Toimintoja.kysyKokonaisluku(1, 2);
-            if (luku == 1) {
-                System.out.println("Syötä kuukaudessa maksettava määrä: ");
-                double summa = Toimintoja.kysyLuku(0, 999999999);
-                saasto.setKuukausiSumma(summa);
-            }
-            if (luku == 2) {
-                System.out.println("Syötä kuukausien määrä: ");
-                int kk = Toimintoja.kysyKokonaisluku(1, 999999999);
-                saasto.setKuukausiMaara(kk);
-            }          
+        int luku = Toimintoja.kysyKokonaisluku(1, 2);
+        if (luku == 1) {
+            System.out.println("\nSyötä kuukaudessa maksettava määrä: ");
+            double summa = Toimintoja.kysyLuku(0, 999999999);
+            saasto.setKuukausiSumma(summa);
+        }
+        if (luku == 2) {
+            System.out.println("\nSyötä kuukausien määrä: ");
+            int kk = Toimintoja.kysyKokonaisluku(1, 999999999);
+            saasto.setKuukausiMaara(kk);
+        }
         Kayttoliittyma.current.tapahtumat.add(saasto);
     }
 }

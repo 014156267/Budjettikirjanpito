@@ -1,9 +1,9 @@
-
 package budjettikirjanpito.gui;
 
 import budjettikirjanpito.logiikka.rahaliikenne.Tapahtuma;
 
 public class TapahtumaTulostus {
+
     /**
      * @param ostot on true, mikäli käyttäjä haluaa ostonsa tulostettavan
      * @param velat on true, mikäli käyttäjä haluaa velkansa tulostettavan
@@ -29,7 +29,7 @@ public class TapahtumaTulostus {
                 }
             }
         }
-        i=1;
+        i = 1;
         if (tulot) {
             tulostettava += "\n";
             if (Kayttoliittyma.current.getTulot().isEmpty()) {
@@ -42,7 +42,7 @@ public class TapahtumaTulostus {
                 }
             }
         }
-        i=1;
+        i = 1;
         if (saastot) {
             tulostettava += "\n";
             if (Kayttoliittyma.current.getSaastot().isEmpty()) {
@@ -55,7 +55,7 @@ public class TapahtumaTulostus {
                 }
             }
         }
-        i=1;
+        i = 1;
         if (ostot) {
             tulostettava += "\n";
             if (Kayttoliittyma.current.getOstokset().isEmpty()) {
@@ -70,5 +70,5 @@ public class TapahtumaTulostus {
         }
         System.out.println(tulostettava);
     }
-    
+
 }

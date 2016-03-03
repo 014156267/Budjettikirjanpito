@@ -1,32 +1,31 @@
-
 package budjettikirjanpito.gui;
 
 import static budjettikirjanpito.gui.Kayttoliittyma.current;
 import static budjettikirjanpito.gui.Kayttoliittyma.lukija;
 
 public class Toimintoja {
-    
-    
+
     /**
      * Metodi pyytää vanhaa salasanaa, jota ohjelma vertaa kirjautuneen
      * käyttäjän syöttämään salasanaan. Tämän jälkeen ohjelma pyytää uutta
      * salasanaa ja liittää sen kirjautuneen käyttäjän salasanaksi.
      */
-    public final void vaihdaSalasana() {
-        System.out.println("Syötä vanha salasana: ");
+    public static final void vaihdaSalasana() {
+        System.out.println("\nSyötä vanha salasana: ");
 
         String vanha = lukija.nextLine();
         {
             if (current.salasana.equals(vanha)) {
-                System.out.println("Syötä uusi salasana: ");
+                System.out.println("\nSyötä uusi salasana: ");
                 String uusi = lukija.nextLine();
                 current.setSalasana(uusi);
+                System.out.println("\nSalasana vaihdettu!");
             } else {
-                System.out.println("Salasana on virheellinen.");
+                System.out.println("\nSalasana on virheellinen.");
             }
         }
     }
-    
+
     /**
      * @param a luvun alaraja
      * @param b luvun yläraja
@@ -44,11 +43,11 @@ public class Toimintoja {
                 if (luku >= a && luku <= b) {
                     return luku;
                 } else {
-                    System.out.println("Syötä luku, joka on välillä [" + a + ","
+                    System.out.println("\nSyötä luku, joka on välillä [" + a + ","
                             + b + "].");
                 }
             } catch (Exception poikkeus) {
-                System.out.println("Lue mitä pyydetään syöttämään!");
+                System.out.println("\nLue mitä pyydetään syöttämään!");
             }
         }
     }
@@ -69,16 +68,14 @@ public class Toimintoja {
                 if (luku >= a && luku <= b) {
                     return luku;
                 } else {
-                    System.out.println("Syötä kokonaisluku, joka on "
+                    System.out.println("\nSyötä kokonaisluku, joka on "
                             + "välillä [" + a + ","
                             + b + "].");
                 }
             } catch (Exception poikkeus) {
-                System.out.println("Lue mitä pyydetään syöttämään!");
+                System.out.println("\nLue mitä pyydetään syöttämään!");
             }
         }
     }
 
-    
-    
 }

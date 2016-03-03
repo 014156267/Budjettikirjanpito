@@ -16,6 +16,7 @@ import java.util.ArrayList;
  *
  */
 public abstract class Kayttaja implements Serializable {
+
     public DecimalFormat muotoilu;
     public ArrayList<Tapahtuma> tapahtumat;
     public String tunnus;
@@ -31,18 +32,17 @@ public abstract class Kayttaja implements Serializable {
     public final void setTunnus(String tunnus) {
         this.tunnus = tunnus;
     }
-    
+
     public final void setSalasana(String salasana) {
         this.salasana = salasana;
     }
-    
-    /**
- * getKuukaudenMenotYhteensa() laskee käyttäjän ostosten ja velkojen 
- * kuukausimaksujen summan.
- * 
- * @return ostosten ja velkojen kuukausimaksujen summa
- */
 
+    /**
+     * getKuukaudenMenotYhteensa() laskee käyttäjän ostosten ja velkojen
+     * kuukausimaksujen summan.
+     *
+     * @return ostosten ja velkojen kuukausimaksujen summa
+     */
     public final double getKuukaudenMenotYhteensa() {
         double yht = 0;
         for (Tapahtuma v : getVelat()) {
@@ -54,17 +54,16 @@ public abstract class Kayttaja implements Serializable {
         }
         return yht;
     }
-    
-     public final String getKuukaudenMenotYhteensaString() {
-         return muotoilu.format(getKuukaudenMenotYhteensa());
-     }
-    
-    /**
- * getKuukaudenTulotYhteensa() laskee käyttäjän tulojen summan.
- *
- * @return tulojen summa
- */
 
+    public final String getKuukaudenMenotYhteensaString() {
+        return muotoilu.format(getKuukaudenMenotYhteensa());
+    }
+
+    /**
+     * getKuukaudenTulotYhteensa() laskee käyttäjän tulojen summan.
+     *
+     * @return tulojen summa
+     */
     public final double getKuukaudenTulotYhteensa() {
         double yht = 0;
         for (Tapahtuma t : getTulot()) {
@@ -72,21 +71,21 @@ public abstract class Kayttaja implements Serializable {
         }
         return yht;
     }
-    
+
     public final String getKuukaudenTulotYhteensaString() {
-         return muotoilu.format(getKuukaudenTulotYhteensa());
-     }
-    
+        return muotoilu.format(getKuukaudenTulotYhteensa());
+    }
+
     /**
- * Metodi laskee käyttäjän tämänhetkisen rahatilanteen laskemalla getKuukaudenTulot() - getKuukaudenMenot().
- * 
- * @return tulojen ja menojen erotus
- */
-    
+     * Metodi laskee käyttäjän tämänhetkisen rahatilanteen laskemalla
+     * getKuukaudenTulot() - getKuukaudenMenot().
+     *
+     * @return tulojen ja menojen erotus
+     */
     public final double getRahatilanne() {
         return (getKuukaudenTulotYhteensa() - getKuukaudenMenotYhteensa());
     }
-    
+
     public final String getRahatilanneString() {
         return muotoilu.format(getRahatilanne());
     }

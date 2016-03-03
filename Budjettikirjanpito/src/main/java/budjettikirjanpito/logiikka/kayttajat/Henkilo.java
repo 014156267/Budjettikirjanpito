@@ -1,10 +1,9 @@
- package budjettikirjanpito.logiikka.kayttajat;
+package budjettikirjanpito.logiikka.kayttajat;
 
- /**
+/**
  * Henkilolla on Kayttaja-luokalta perittyjen salasanan ja tapahtumalistan
  * lisäksi etu- ja sukunimi.
  */
- 
 public class Henkilo extends Kayttaja {
 
     private final String etunimi;
@@ -15,7 +14,7 @@ public class Henkilo extends Kayttaja {
         this.etunimi = etunimi;
         this.sukunimi = sukunimi;
     }
-    
+
     @Override
     public String toString() {
         String tulostettava = "";
