@@ -15,3 +15,4 @@ Ohjelmasta saa myös erilaisia tulosteita, kun kirjautuneena ollessa syöttää pääv
 Kirjautuessa ulos ohjelma kysyy, tallenetaanko muutokset. Vastatessasi k kaikki tapahtumissa tehdyt muutokset tallentuvat ja kirjautuessasi ensi kerralla sisään, jatkat juuri siitä mihin jäit.
 
 Käyttäjän poistossa ohjelma kysyy salasanaasi ja tämän jälkeen ohjelma kirjaa sinut ulos ja poistaa käyttäjän sekä kaikki tämän tapahtumat tietokannasta.
+HUOM! Ohjelmassa on ainakin kaksi bugia, jotka liittyvät käyttäjän poistamiseen. Jos olet henkilö-tyyppinen käyttäjä, käynnistä ohjelma uudelleen, ennenkuin poistat itsesi. Näin poistut myös kaikista perheistä, joihin kuulut. Lisäksi, jos todella kuulut johonkin perheeseen ja poistat tunnuksesi ja tämän jälkeen joskus luot uuden henkilö-tyyppisen käyttäjän samalla käyttäjätunnuksella, liityt automaattisesti niihin kaikkiin perheisiin, joihin kuuluit aiemmin.

@@ -40,7 +40,8 @@ public class Tapahtuma implements Serializable {
 
     @Override
     public final String toString() {
-        return "Määrä: " + Kayttoliittyma.muotoilu.format(maara) + "\nSelitys: " + selitys;
+        return "Määrä: " + Kayttoliittyma.muotoilu.format(maara)
+                + " euroa" + "\nSelitys: " + selitys;
     }
 
 }

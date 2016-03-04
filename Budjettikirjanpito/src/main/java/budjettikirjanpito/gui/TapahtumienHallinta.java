@@ -124,8 +124,10 @@ public class TapahtumienHallinta {
     }
 
     /**
-     * *
-     *
+     * Metodi listaa kaikki käyttäjän tekemät ostokset numeroituna luettelona ja
+     * pyytää käyttäjää syöttämään sen ostoksen numeron, jota hän haluaa
+     * tarkastella. Tämän jälkeen käyttäjä saa eri syötteillä eri tietoja
+     * valitsemastaan ostotapahtumastaan.
      */
     public static final void ostostenHallinta() {
         Ostos kasiteltava;
@@ -147,7 +149,7 @@ public class TapahtumienHallinta {
             int luku = Toimintoja.kysyKokonaisluku(0, 2);
             System.out.println("");
             if (luku == 1) {
-                System.out.println(kasiteltava.getMaaraString());
+                System.out.println(kasiteltava.getMaaraString() + " euroa.");
             } else if (luku == 2) {
                 System.out.println(kasiteltava.selitys);
             } else if (luku == 0) {
@@ -156,6 +158,12 @@ public class TapahtumienHallinta {
         }
     }
 
+    /**
+     * Metodi listaa kaikki käyttäjän tulot numeroituna luettelona ja pyytää
+     * käyttäjää syöttämään sen tulon numeron, jota hän haluaa tarkastella.
+     * Tämän jälkeen käyttäjä saa eri syötteillä eri tietoja valitsemastaan
+     * tulostaan.
+     */
     public static final void tulojenHallinta() {
         Tulo kasiteltava;
         if (Kayttoliittyma.current.getTulot().isEmpty()) {
@@ -177,7 +185,7 @@ public class TapahtumienHallinta {
             int luku = Toimintoja.kysyKokonaisluku(0, 3);
             System.out.println("");
             if (luku == 1) {
-                System.out.println(kasiteltava.getMaaraString());
+                System.out.println(kasiteltava.getMaaraString() + " euroa.");
             } else if (luku == 2) {
                 System.out.println(kasiteltava.selitys);
             } else if (luku == 3) {
@@ -188,6 +196,12 @@ public class TapahtumienHallinta {
         }
     }
 
+    /**
+     * Metodi listaa kaikki käyttäjän ottamat velat numeroituna luettelona ja
+     * pyytää käyttäjää syöttämään sen velan numeron, jota hän haluaa
+     * tarkastella. Tämän jälkeen käyttäjä saa eri syötteillä eri tietoja
+     * valitsemastaan velastaan.
+     */
     public static final void velkojenHallinta() {
         Velka kasiteltava;
         if (Kayttoliittyma.current.getVelat().isEmpty()) {
@@ -217,7 +231,8 @@ public class TapahtumienHallinta {
             System.out.println("");
             int luku = Toimintoja.kysyKokonaisluku(0, 9);
             if (luku == 1) {
-                System.out.println("\n" + kasiteltava.getMaaraString());
+                System.out.println("\n" + kasiteltava.getMaaraString()
+                        + " euroa.");
             } else if (luku == 2) {
                 System.out.println("\n" + kasiteltava.getAihe());
             } else if (luku == 3) {
@@ -232,8 +247,10 @@ public class TapahtumienHallinta {
                 System.out.println("\nVelan kuukausimaksu on "
                         + kasiteltava.kuukausimaksuString() + " euroa.");
             } else if (luku == 7) {
-                System.out.println("\nLyhennät varsinaista velkaa (ilman korkoja)"
-                        + " " + kasiteltava.kuukaudenLyhennysEraString() + " euroa kuukaudessa.");
+                System.out.println("\nLyhennät varsinaista velkaa "
+                        + "(ilman korkoja)"
+                        + " " + kasiteltava.kuukaudenLyhennysEraString()
+                        + " euroa kuukaudessa.");
             } else if (luku == 8) {
                 System.out.println("\nMääritä x: ");
                 int kk = Toimintoja.kysyKokonaisluku(1, 999999999);
@@ -250,6 +267,12 @@ public class TapahtumienHallinta {
         }
     }
 
+    /**
+     * Metodi listaa kaikki käyttäjän säästösuunnitelmat numeroituna luettelona
+     * ja pyytää käyttäjää syöttämään sen säästösuunnitelman numeron, jota hän
+     * haluaa tarkastella. Tämän jälkeen käyttäjä saa eri syötteillä eri tietoja
+     * valitsemastaan säästösuunnitelmastaan.
+     */
     public static final void saastojenHallinta() {
         Saasto kasiteltava;
         if (Kayttoliittyma.current.getSaastot().isEmpty()) {
@@ -271,13 +294,14 @@ public class TapahtumienHallinta {
             System.out.println("");
             int luku = Toimintoja.kysyKokonaisluku(0, 4);
             if (luku == 1) {
-                System.out.println(kasiteltava.getMaaraString());
+                System.out.println(kasiteltava.getMaaraString() + " euroa.");
             } else if (luku == 2) {
                 System.out.println(kasiteltava.selitys);
             } else if (luku == 3) {
-                System.out.println(kasiteltava.getKuukausiMaara());
+                System.out.println(kasiteltava.getKuukausiMaara() + " kuukautta");
             } else if (luku == 4) {
-                System.out.println(kasiteltava.getKuukausiSummaString());
+                System.out.println(kasiteltava.getKuukausiSummaString()
+                        + " euroa.");
             } else if (luku == 0) {
                 break;
             }

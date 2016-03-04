@@ -31,17 +31,15 @@ public class Tapahtumanlisays {
         System.out.println("2. Tulo");
         System.out.println("3. Velka");
         System.out.println("4. Säästö");
-        String luku = Kayttoliittyma.lukija.nextLine();
-        if (luku.equals("1")) {
+        int luku = Toimintoja.kysyKokonaisluku(1, 4);
+        if (luku == 1) {
             lisaaOstos();
-        } else if (luku.equals("2")) {
+        } else if (luku == 2) {
             lisaaTulo();
-        } else if (luku.equals("3")) {
+        } else if (luku == 3) {
             lisaaVelka();
-        } else if (luku.equals("4")) {
+        } else if (luku == 4) {
             lisaaSaasto();
-        } else {
-            System.out.println("Anna kelvollinen syöte.");
         }
     }
 

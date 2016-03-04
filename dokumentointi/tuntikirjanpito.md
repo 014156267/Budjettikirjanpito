@@ -62,3 +62,9 @@
   - Checkstyle-raportin tutkintaa. Ohjeistitte ottamaan käyttöliittymän pois checkstylen alta. Minulla checkstyle.xml ja mysuppressions.xml -tiedostoihin tehdyt muutokset eivät auttaneet. Eli en saanut otettua käyttöliittymäluokkia pois raportista ja logiikka ei juuri ole muuttunut. Sitä siistin jo viime viikolla, vaikka siinä on edelleen paljon virheitä. Olisi kiva saada kommenttia, onko logiikkaa tarpeen siistiä, kun checkstyle puhuu riviväleistä, maagisista numeroista, finaaleista ja liian pitkistä riveistä (jotka muutin yksitellen lyhyiksi, mutta painettuani Shift+Alt+F kaikki palasi kiltisti ennalleen)?
   
 
+**Viikko 7**
+
+* Ke 2.3. klo 17-21
+  - Perheen tiedonpäivityksen kehitystä. Rakennemuutos siten, että perheessä on nyt lista käyttäjänimiä.
+* Pe 4.3. klo 17-21
+  - Viimeistelyä viimeiseen palautukseen: Koodin siistimistä, testausdokumentin kirjoitus, muun dokumentaation päivitys niiltä osin kuin tarpeen.

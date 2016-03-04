@@ -46,7 +46,7 @@ public class Kirjautuminen {
             }
         }
 
-        System.out.println("Syöttämääsi käyttäjätunnusta ei ole.");
+        System.out.println("\nSyöttämääsi käyttäjätunnusta ei ole.");
     }
 
 }

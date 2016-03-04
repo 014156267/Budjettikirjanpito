@@ -21,7 +21,7 @@ public class Kayttajanlisays {
      */
     public static final void uudenKayttajanLisays() throws IOException, FileNotFoundException, ClassNotFoundException {
         while (true) {
-            System.out.println("Henkilo 1");
+            System.out.println("\nHenkilo 1");
             System.out.println("Perhe 2");
             System.out.println("Yritys 3");
             System.out.println("Takaisin x");
@@ -40,7 +40,7 @@ public class Kayttajanlisays {
             } else if (tyyppi.equals("x")) {
                 break;
             } else {
-                System.out.println("Valitse jokin alla olevista "
+                System.out.println("\nValitse jokin alla olevista "
                         + "vaihtoehdoista:");
             }
         }
@@ -87,14 +87,14 @@ public class Kayttajanlisays {
     public static final void uudenPerheenLisays() throws IOException, FileNotFoundException, ClassNotFoundException {
         Perhe perhe = new Perhe();
         while (true) {
-            System.out.println("Lisää henkilö perheeseen 1");
+            System.out.println("\nLisää henkilö perheeseen 1");
             System.out.println("Valmis x");
             String syote2 = Kayttoliittyma.lukija.nextLine();
             boolean luotu = false;
             if (syote2.equals("x")) {
                 System.out.println("\nAnna perheellesi käyttäjätunnus: ");
-                String tunnus = Kayttoliittyma.lukija.nextLine();
                 while (true) {
+                    String tunnus = Kayttoliittyma.lukija.nextLine();
                     if (tunnuksenTarkistus(tunnus)) {
                         perhe.tunnus = tunnus;
                         System.out.println("\nAnna perheellesi salasana: ");
@@ -159,7 +159,7 @@ public class Kayttajanlisays {
         System.out.println("\nAnna yrityksellesi käyttäjätunnus: ");
         while (true) {
             String tunnus = Kayttoliittyma.lukija.nextLine();
-            if (!tunnuksenTarkistus(tunnus)) {
+            if (tunnuksenTarkistus(tunnus)) {
                 System.out.println("\nAnna yrityksellesi salasana: ");
                 String salasana = Kayttoliittyma.lukija.nextLine();
                 Yritys yritys = new Yritys(nimi, ytunnus);
